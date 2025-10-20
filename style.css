@@ -4,14 +4,24 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    color: #333;
+    color: #24232b;
+    text-align: center;
 }
 
 header {
-    background-color: #333;
+    background-color: #24232b;
     color: #fff;
-    padding: 1rem 0;
-    text-align: center;
+    padding: 1rem 20px;
+    margin: 10px 10px 20px 10px;
+    text-align: left;
+    border-radius: 20px;
+    box-shadow: #0b024530 0px 4px 8px ;
+    transition: 0.3s ease-in-out;
+}
+
+header:hover {
+    box-shadow: #0b0245 0px 0px 12px ;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 header h1 {
@@ -32,25 +42,36 @@ main {
     padding-bottom: 20px;
 }
 
+/* boutun avec effet glassmorphism (transparence)*/
 button {
-    background-color: #007bff;
+    background-color: #0084ff;
+    box-shadow: #0b024530 0px 4px 8px ;
+    border: #24232b 3px solid;
     color: white;
     padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
+    transition: 0.3s ease-in-out;
 }
 
 button:hover {
     background-color: #0056b3;
+    border-radius: 10px;
+    transform: scale(1.05);
+    box-shadow: #0b024568 0px 4px 8px ;
+}
+
+button:active {
+    background-color: #003cb3;
+    transform: scale(0.95);
 }
 
 #message {
     margin-top: 15px;
     font-weight: bold;
-    color: #28a745;
+    color: #f39d07;
 }
 
 footer {
