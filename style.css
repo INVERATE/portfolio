@@ -4,24 +4,14 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    color: #24232b;
-    text-align: center;
+    color: #333;
 }
 
 header {
-    background-color: #24232b;
+    background-color: #333;
     color: #fff;
-    padding: 1rem 20px;
-    margin: 10px 10px 20px 10px;
-    text-align: left;
-    border-radius: 20px;
-    box-shadow: #0b024530 0px 4px 8px ;
-    transition: 0.3s ease-in-out;
-}
-
-header:hover {
-    box-shadow: #0b0245 0px 0px 12px ;
-    transition: box-shadow 0.3s ease-in-out;
+    padding: 1rem 0;
+    text-align: center;
 }
 
 header h1 {
@@ -42,36 +32,53 @@ main {
     padding-bottom: 20px;
 }
 
-/* boutun avec effet glassmorphism (transparence)*/
 button {
-    background-color: #0084ff;
-    box-shadow: #0b024530 0px 4px 8px ;
-    border: #24232b 3px solid;
+    background-color: #007bff;
     color: white;
     padding: 10px 15px;
-    border-radius: 20px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
-    transition: 0.3s ease-in-out;
 }
 
 button:hover {
     background-color: #0056b3;
-    border-radius: 10px;
-    transform: scale(1.05);
-    box-shadow: #0b024568 0px 4px 8px ;
-}
-
-button:active {
-    background-color: #003cb3;
-    transform: scale(0.95);
 }
 
 #message {
     margin-top: 15px;
     font-weight: bold;
-    color: #f39d07;
+    color: #28a745;
+}
+
+.three-js-section {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+#three-container {
+    width: 100%;
+    height: 300px;
+    /* Taille du conteneur pour le rendu 3D */
+    background-color: #e0e0e0;
+    display: flex;
+    /* Pour centrer le canevas */
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* Important pour Three.js */
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    /* Inclure bordure et padding dans la taille */
+}
+
+/* Assurez-vous que le canevas Three.js s'adapte à son conteneur */
+#three-container canvas {
+    display: block;
+    /* Supprime l'espace sous le canevas */
 }
 
 footer {
@@ -82,19 +89,3 @@ footer {
     color: #fff;
     font-size: 0.9em;
 }
-
-/* Styles pour Bootstrap si décommenté dans l'HTML */
-/*
-.container {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-.alert-info {
-    background-color: #d1ecf1;
-    color: #0c5460;
-    border: 1px solid #bee5eb;
-    padding: .75rem 1.25rem;
-    margin-bottom: 1rem;
-    border-radius: .25rem;
-}
-*/

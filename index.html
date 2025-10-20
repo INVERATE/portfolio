@@ -4,28 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Néo COLPIN</title>
+    <title>Mon Super Site GitHub Pages avec 3D</title>
     <link rel="stylesheet" href="style.css">
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body>
     <header>
-        <h1 id="nom">Néo COLPIN</h1>
-        <p>Étudiant Ingénieur en Intelligence Artificielle</p>
+        <h1>Néo Colpin</h1>
+        <p>Étudiant ingénieur en Intelligence artificielle</p>
     </header>
 
     <main>
         <section class="info-section">
-            <h2>À propos de moi</h2>
+            <h2>À propos de ce site</h2>
+            <p>Ce site est un exemple pour montrer comment héberger HTML, CSS, JavaScript et un élément 3D avec Three.js
+                sur GitHub Pages.</p>
             <p>Cliquez sur le bouton ci-dessous pour voir le JavaScript en action :</p>
-            <button id="monBouton">Youpiiii !</button>
+            <button id="monBouton">YOUPIII !</button>
             <p id="message"></p>
         </section>
 
+        <section class="three-js-section">
+            <h2>Un peu de 3D !</h2>
+            <p>Voici un cube 3D interactif généré avec Three.js :</p>
+            <div id="three-container">
+            </div>
+        </section>
     </main>
 
     <footer>
-        <p>Créé par Néo COLPIN avec 🩵</p>
+        <p>Codé avec 🩵</p>
     </footer>
 
     <script src="script.js"></script>
