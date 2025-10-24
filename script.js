@@ -47,9 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // 2. Caméra
             camera = new THREE.PerspectiveCamera(10, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.z = 12;
+            camera.position.z = 10;
             camera.position.y = 0;
-            camera.position.x = -9;
+            camera.position.x = 0;
 
             // 3. Rendu (Renderer)
             renderer = new THREE.WebGLRenderer({ antialias: true });
