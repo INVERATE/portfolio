@@ -5,25 +5,67 @@ body {
     padding: 0;
     background-color: #f4f4f4;
     color: #333;
+
 }
 
 header {
-    background-color: #333;
-    color: #fff;
-    padding: 1rem 0;
-    text-align: center;
+    position: relative;
+    /* pour rester au-dessus du canvas */
+    display: flex;
+    overflow: hidden;
+    /* ajuste la hauteur du header */
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    color: black;
+    z-index: 1;
+    text-align: left;
+    border: #333 2px solid;
+    border-radius: 1em;
+    margin: 20px;
+    padding: 10px;
+    box-shadow: 0 0 0 0 black;
+    transition: all 0.3s ease;
+    transform: translateY(0px);
 }
 
-header h1 {
-    margin: 0;
+header:hover {
+    box-shadow: 0 5px 0 0 black;
+    transform: translateY(-5px);
+}
+
+header h1,
+header p {
+    position: relative;
+    /* pour rester au-dessus du canvas */
+    z-index: 2;
+    margin: 0.3em;
+    text-align: left;
+}
+
+/* canvas de Three.js en fond */
+#header-3d-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    filter: blur(0px)
 }
 
 main {
     padding: 20px;
-    max-width: 800px;
-    margin: 20px auto;
+    margin: 20px;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 0 0 black;
+    border-radius: 1em;
+    padding: 1em 2em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid black;
+    box-shadow: 0 5px 0 0 #243a55, inset -3px -3px 0 0 whitesmoke;
+    position: relative;
 }
 
 .info-section {
@@ -32,53 +74,41 @@ main {
     padding-bottom: 20px;
 }
 
+
 button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
+    background-color: white;
+    color: black;
+    border-radius: 1em;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 1em 2em;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
+    transition: all 0.2s ease;
+    border: 2px solid black;
+    box-shadow: 0 0 0 0 black, inset -3px -3px 0 0 whitesmoke;
+    position: relative;
 }
 
+/* Hover identique */
 button:hover {
-    background-color: #0056b3;
+    background-color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 0 0 black,
+        inset -2px -2px 0 0 whitesmoke;
 }
+
+/* Effet d’enfoncement */
+button:active {
+    transform: translateY(0px) translateX(0px);
+    box-shadow: 0 0 0 0 black,
+        inset -3px -3px 0 0 whitesmoke;
+}
+
 
 #message {
     margin-top: 15px;
     font-weight: bold;
     color: #28a745;
-}
-
-.three-js-section {
-    margin-top: 30px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-}
-
-#three-container {
-    width: 100%;
-    height: 300px;
-    /* Taille du conteneur pour le rendu 3D */
-    background-color: #e0e0e0;
-    display: flex;
-    /* Pour centrer le canevas */
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    /* Important pour Three.js */
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    /* Inclure bordure et padding dans la taille */
-}
-
-/* Assurez-vous que le canevas Three.js s'adapte à son conteneur */
-#three-container canvas {
-    display: block;
-    /* Supprime l'espace sous le canevas */
 }
 
 footer {
