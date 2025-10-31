@@ -1,0 +1,421 @@
+/* ===================================================
+ * 1. VARIABLES & FONT-FACE
+ * =================================================== */
+
+:root {
+    /* Couleurs de Thème */
+    --primary-color: #333;
+    /* Utilisé pour les bordures, ombres */
+    --secondary-color: #555;
+    /* Couleur secondaire, ex: footer */
+    --accent-color: #007BFF;
+    /* Couleur d'accentuation, ex: liens, messages */
+
+    /* Couleurs de Fond et Texte */
+    --background-page-color: #f4f4f4;
+    /* Fond de la page (body) */
+    --background-element-color: whitesmoke;
+    /* Fond des éléments principaux (main, button) */
+    --background-darker-color: #e0e0e0;
+    /* Couleur pour les motifs discrets (dots) */
+    --text-color: #333;
+    /* Couleur du texte général */
+}
+
+/* Polices personnalisées */
+/* NOTE: Utiliser WOFF/WOFF2 est plus performant que TTF/OTF pour le web */
+@font-face {
+    font-family: 'MainFont';
+    src: url('../fonts/Comfortaa-Bold.ttf') format('truetype');
+    /* Le poids doit être précis */
+    font-style: normal;
+    font-display: swap;
+    /* Bonne pratique pour l'affichage des polices */
+}
+
+@font-face {
+    font-family: 'TitleFont';
+    src: url('../fonts/Syntha.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* ===================================================
+ * 2. STYLES GLOBAUX & RESET
+ * =================================================== */
+
+* {
+    box-sizing: border-box;
+    /* Meilleure gestion des paddings/borders */
+    margin: 0;
+    padding: 0;
+}
+
+/* réserve l'espace de la scrollbar pour éviter le saut */
+html {
+    scrollbar-gutter: stable;
+    /* moderne et propre */
+}
+/* style.css */
+
+/* Cible l'ensemble de la barre de défilement (sur la page entière) */
+::-webkit-scrollbar {
+    width: 1em;
+    /* Largeur de la barre de défilement verticale */
+    height: 1em;
+    /* Hauteur de la barre de défilement horizontale */
+}
+
+/* Cible le "rail" ou la "piste" (le fond de la barre) */
+::-webkit-scrollbar-track {
+    background: var(--background-darker-color);
+    /* Couleur de fond du rail */
+}
+
+/* Cible la "poignée" ou le "pouce" (la partie que l'on manipule) */
+::-webkit-scrollbar-thumb {
+    background: rgb(173, 173, 173);
+    /* Couleur de la poignée */
+    border-radius: 1em;
+}
+
+/* Style de la poignée au survol (hover) */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(130, 130, 130);
+    /* Couleur plus foncée au survol */
+}
+
+body {
+    font-family: 'MainFont', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-page-color);
+    color: var(--text-color);
+}
+
+/* ===================================================
+ * 3. MISE EN PAGE & STRUCTURE
+ * =================================================== */
+
+header {
+    z-index: 10;
+    /* Assuré d'être au-dessus de tout le contenu 3D */
+    display: flex;
+    ;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* Alignement modernisé */
+
+    /* Styles Thème */
+    color: var(--text-color);
+    text-align: left;
+    border: var(--primary-color) 2px solid;
+    border-radius: 0 0 1em 1em;
+    width: 100%;
+    min-height: 85vh;
+    padding: 10px;
+
+    /* Effet "Skeuo" - état normal */
+    background-color: var(--background-element-color);
+    box-shadow: 0 5px 0 0 var(--primary-color);
+    transform: translateY(0);
+    overflow: hidden;
+
+    /* Transition pour l'effet de survol */
+    transition: all 0.7s ease-in-out;
+}
+
+/* Dégradé de masquage pour le fond 3D (bonne pratique) */
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Largeur du dégradé */
+    height: 100%;
+    /* Utilisation de la variable pour le fond si nécessaire, mais blanc est OK ici */
+    z-index: 1;
+    /* Devant le canvas (z-index: 0) mais derrière le texte (z-index: 2) */
+    pointer-events: none;
+    /* Permet d'interagir avec les éléments derrière */
+    background: linear-gradient(to bottom, var(--background-page-color) 0%, transparent 50%);
+}
+
+header h1,
+header p,
+header button{
+    position: relative;
+    z-index: 2;
+    /* Pour passer devant le dégradé (z-index: 1) */
+    margin: 0.3em;
+}
+
+header h1 {
+    font-family: 'TitleFont', sans-serif;
+    font-size: 3em;
+}
+
+/* Canvas de fond Three.js */
+#header-3d-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    filter:blur(0.5px);
+}
+
+/* État Réduit (Appliqué par JavaScript) */
+.header-scrolled {
+    min-height: 10vh;
+    /* Hauteur réduite souhaitée (ajustez cette valeur) */
+
+    /* Optionnel : Rendre le header fixe en haut de page */
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* Assurez-vous que le contenu à l'intérieur du header est centré ou repositionné si besoin */
+.header-scrolled h1,
+.header-scrolled p {
+    font-size: 1em;
+    /* Réduisez la taille du texte si nécessaire */
+}
+
+/* Vous aviez un élément #spacer, utilisons-le si possible, sinon le padding-top sur main est mieux */
+#spacer {
+    display: none;
+    /* Cachez-le par défaut */
+    height: 15vh;
+    /* Hauteur de la version réduite du header */
+    flex-shrink: 0;
+}
+
+.scrolled #spacer {
+    display: block;
+    /* Affichez-le uniquement quand on scroll */
+}
+
+.scroll-down-button {
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+    border:none;
+    box-shadow: none;
+}
+
+.scroll-down-button:hover {
+    box-shadow: none;
+    transform: translateY(5px);
+    /* Retour à la position normale */
+}
+
+.scroll-down-button:active {
+    transform: translateY(8px);
+    /* Retour à la position normale */
+}
+
+.card {
+    padding: 20px;
+    margin: 20px;
+    background-color: var(--background-element-color);
+    border-radius: 1em;
+    padding: 1em 2em;
+    border: 2px solid var(--primary-color);
+
+    /* Effet Skeuo */
+    box-shadow: 0 5px 0 0 var(--primary-color),
+        inset -3px -3px 0 0 var(--background-element-color);
+    /* Utilisation de la variable */
+
+    transition: all 0.2s ease;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    background-color: var(--background-element-color);
+    color: var(--secondary-color);
+    font-size: 0.9em;
+}
+
+
+/* ===================================================
+ * 4. COMPOSANTS RÉUTILISABLES
+ * =================================================== */
+
+/* --- Bouton Skeuomorphisme --- */
+button {
+    font-family: 'MainFont', sans-serif;
+    background-color: var(--background-element-color);
+    color: var(--text-color);
+    border-radius: 1em;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 1em 2em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid var(--primary-color);
+
+    /* Effet initial */
+    box-shadow: 0 2px 0 0 var(--primary-color);
+    position: relative;
+    overflow: hidden;
+    /* Nécessaire pour les effets internes (comme les dots) */
+}
+
+/* Hover (Soulèvement) */
+button:hover {
+    transform: translateY(-3px);
+    /* Légère modification de la valeur pour plus de subtilité */
+    box-shadow: 0 5px 0 0 var(--primary-color);
+    /* Retrait du scale pour garder la cohérence du mouvement Y */
+}
+
+/* Active (Enfoncement) */
+button:active {
+    transform: translateY(3px);
+    /* Retour à la position normale */
+    box-shadow: 0 0 0 0 var(--primary-color);
+    scale: 0.98;
+}
+
+/* --- Divers Utilitaires --- */
+#message {
+    margin-top: 15px;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* ===================================================
+ * 5. ANIMATIONS ET EFFETS
+ * =================================================== */
+
+/* Motif de points (Dots) */
+.dots-background {
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-element-color);
+    background-image: radial-gradient(var(--background-darker-color) 3px, transparent 0);
+    background-size: 30px 30px;
+
+    /* Correction : Laissez l'animation toujours active, et utilisez l'état de jeu pour le contrôle */
+    animation: move 2s linear infinite;
+    /* Animation de base lente */
+    animation-play-state: paused;
+    /* Pause par défaut */
+    transition: animation-duration 0.5s ease-in-out, transform 0.3s ease;
+    /* Transition sur les propriétés animées */
+}
+
+.dots-background:hover {
+    animation-play-state: running;
+    /* Vitesse plus rapide au survol */
+    transform: scale(1.02);
+}
+
+@keyframes move {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 30px 30px;
+    }
+}
+
+
+/* menu-assets.css */
+
+/* --- Styles du Panneau Latéral (Le "Pop-up" à droite) --- */
+
+.menu-panel {
+    /* 1. Positionnement fixe : reste en place pendant le défilement */
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    /* 2. Dimensions et Apparence */
+    min-width: 30%;
+    width: 150px;
+    max-width: 50%;
+
+
+    /* Pour les petits écrans */
+    background-color: var(--background-page-color);
+    color: var(--text-color);
+    font-weight: bolder;
+    padding: 1em;
+    z-index: 1001;
+
+    border: 2px solid var(--primary-color);
+    border-radius: 0 0 0 1em;
+    box-shadow: 0 0 10px var(--primary-color), 0 5px 0 0 var(--primary-color);
+
+    /* 3. Masquage initial */
+    transform: translateY(-200%);
+
+    /* 4. Animation de transition */
+    transition: transform 0.3s ease-out;
+}
+
+/* État Actif : Afficher le menu */
+.menu-panel.is-open {
+    transform: translateX(0);
+}
+
+/* Overlay pour cliquer à l'extérieur et fermer */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+     /* Semi-transparent noir */
+    z-index: 1000;
+    display: none;
+    /* Caché par défaut */
+}
+
+.menu-overlay.is-active {
+    display: block;
+}
+
+/* Styles des éléments internes (Bouton et liens) */
+.menu-close-btn {
+    float: right;
+    z-index: 1002;
+}
+
+.menu-links {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-links li {
+    margin: 15px 0;
+}
+
+.menu-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.2s;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.menu-links a:hover {
+    color: var(--accent-color);
+    transform: translateY(-2px);
+}
