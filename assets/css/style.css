@@ -346,8 +346,8 @@ button:active {
 
     /* 2. Dimensions et Apparence */
     min-width: 30%;
-    width: 150px;
-    max-width: 50%;
+    width: 400px;
+    max-width: 100%;
 
 
     /* Pour les petits écrans */
