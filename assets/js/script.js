@@ -1,95 +1,99 @@
-// Variable pour stocker la position normalisée (entre -1 et 1)
+// Variables pour stocker la position normalisée (entre -1 et 1)
 let mouseX = 0;
 let mouseY = 0;
 
-// Facteur de sensibilité du gyroscope (ajustez cette valeur)
-const GYRO_SENSITIVITY = 0.5;
+// Variables pour le gyroscope
+let gyroX = 0;
+let gyroY = 0;
+let isGyroActive = false;
+let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-// --- 1. Gestion du Gyroscope (Orientation de l'Appareil) ---
-function setupDeviceOrientation() {
-
-    // Vérifie d'abord si l'événement 'DeviceOrientationEvent' est supporté
-    if (!window.DeviceOrientationEvent) {
-        console.warn("DeviceOrientationEvent non supporté sur cet appareil.");
-        return;
-    }
-
-    // Demander la permission d'accès (Obligatoire sur iOS 13+ pour la sécurité)
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-        // Crée un bouton (ou utilise un événement) pour déclencher la permission sur iOS
-        // NOTE: Cette action doit être initiée par un clic utilisateur !
-        window.addEventListener('click', function requestPermissionHandler() {
-            DeviceOrientationEvent.requestPermission()
-                .then(permissionState => {
-                    if (permissionState === 'granted') {
-                        // Permission accordée, on peut ajouter l'écouteur
-                        window.addEventListener('deviceorientation', handleOrientation);
-                    } else {
-                        console.error('Accès au gyroscope refusé par l\'utilisateur.');
-                    }
-                })
-                .catch(console.error);
-
-            // Retirer l'écouteur après le premier clic
-            window.removeEventListener('click', requestPermissionHandler);
-        }, { once: true });
-
-        // Vous devez informer l'utilisateur de cliquer pour activer le mouvement 3D.
-        console.log("Cliquez n'importe où sur l'écran pour activer le gyroscope.");
-
-    } else {
-        // Pour les navigateurs Android/Desktop non-iOS (permission implicite)
-        window.addEventListener('deviceorientation', handleOrientation);
-    }
-}
-
-function handleOrientation(event) {
-    // Les valeurs alpha (z), beta (x) et gamma (y) sont en degrés 
-
-    // event.gamma : Mouvement gauche/droite (axe Y du navigateur)
-    // event.beta : Mouvement avant/arrière (axe X du navigateur)
-
-    // Normalisation de gamma (x) et beta (y)
-    // On utilise gamma pour l'axe X (gauche/droite) et beta pour l'axe Y (haut/bas).
-
-    // Normalisation X (de -1 à 1) : gamma varie de -90 à 90 degrés
-    // Note: On centre autour de 0, on divise par 90 pour avoir +/- 1, puis on applique la sensibilité.
-    const normX = (event.gamma / 90) * GYRO_SENSITIVITY;
-    mouseX = Math.min(1, Math.max(-1, normX)); // Clampe la valeur entre -1 et 1
-
-    // Normalisation Y (de -1 à 1) : beta varie de -180 à 180 (on utilise un range plus petit)
-    // Note: On prend la moitié du range (90) pour éviter les valeurs extrêmes et on inverse pour Three.js.
-    const normY = -(event.beta / 90) * GYRO_SENSITIVITY;
-    mouseY = Math.min(1, Math.max(-1, normY)); // Clampe la valeur entre -1 et 1
-}
-
-
-// --- 2. Gestion de la Souris (Desktop) ---
+// Événement pour capturer la position de la souris (desktop)
 document.addEventListener('mousemove', (event) => {
-    // Si nous sommes sur un écran tactile, cette logique est ignorée après l'activation du gyroscope.
-    if (window.DeviceOrientationEvent && window.DeviceOrientationEvent.requestPermission) {
-        // Optionnel : Vous pouvez vérifier la présence du gyroscope ici pour désactiver la souris.
+    if (!isMobile) {
+        mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
     }
-
-    // Calcul de la position X normalisée (-1 à 1)
-    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-
-    // Calcul de la position Y normalisée (-1 à 1), inversée pour Three.js
-    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 });
+
+// Fonction pour demander la permission et initialiser le gyroscope (iOS 13+)
+async function requestGyroPermission() {
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        try {
+            const permission = await DeviceOrientationEvent.requestPermission();
+            if (permission === 'granted') {
+                initGyroscope();
+                return true;
+            }
+        } catch (error) {
+            console.error('Erreur permission gyroscope:', error);
+        }
+        return false;
+    } else {
+        // Android ou navigateurs qui ne nécessitent pas de permission
+        initGyroscope();
+        return true;
+    }
+}
+
+// Initialiser les événements du gyroscope
+function initGyroscope() {
+    window.addEventListener('deviceorientation', handleOrientation, true);
+    isGyroActive = true;
+}
+
+// Gérer les données du gyroscope
+function handleOrientation(event) {
+    if (event.beta !== null && event.gamma !== null) {
+        // beta: inclinaison avant/arrière (-180 à 180)
+        // gamma: inclinaison gauche/droite (-90 à 90)
+
+        // Normaliser beta (-90 à 90 pour un usage pratique)
+        let beta = event.beta;
+        if (beta > 90) beta = 90;
+        if (beta < -90) beta = -90;
+
+        // Convertir en valeurs normalisées (-1 à 1)
+        gyroY = beta / 90;  // Inclinaison avant/arrière
+        gyroX = event.gamma / 90;  // Inclinaison gauche/droite
+
+        // Inverser si l'appareil est en mode paysage
+        if (window.orientation === 90 || window.orientation === -90) {
+            [gyroX, gyroY] = [-gyroY, gyroX];
+        }
+    }
+}
 
 // Attendre que le DOM soit complètement chargé
 document.addEventListener('DOMContentLoaded', function () {
+
+    // Bouton pour activer le gyroscope sur mobile (iOS)
+    if (isMobile && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        const activateBtn = document.createElement('button');
+        activateBtn.textContent = 'Activer le gyroscope';
+        activateBtn.style.cssText = 'position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:1000;padding:10px 20px;background:#007bff;color:white;border:none;border-radius:5px;cursor:pointer;';
+        document.body.appendChild(activateBtn);
+
+        activateBtn.addEventListener('click', async () => {
+            const granted = await requestGyroPermission();
+            if (granted) {
+                activateBtn.remove();
+            }
+        });
+    } else if (isMobile) {
+        // Android: activation automatique
+        initGyroscope();
+    }
 
     // --- Code pour Three.js ---
     if (typeof THREE !== 'undefined') {
         const container = document.getElementById('header-3d-bg');
         if (!container) {
-            console.error("Le conteneur #three-container n'a pas été trouvé.");
+            console.error("Le conteneur #header-3d-bg n'a pas été trouvé.");
             return;
         }
 
-        let scene, camera, renderer, cube;
+        let scene, camera, renderer;
 
         function init() {
             // 1. Scène
@@ -108,14 +112,14 @@ document.addEventListener('DOMContentLoaded', function () {
             renderer.setSize(container.clientWidth, container.clientHeight);
             container.appendChild(renderer.domElement);
 
-            // 4. Objet (Cube) - Nous allons utiliser un matériau plus riche pour réagir à la lumière
-            createDeepLearningNetwork()
+            // 4. Créer le réseau de neurones
+            createDeepLearningNetwork();
 
-            // 5. Lumière (Nécessaire pour le MeshStandardMaterial)
-            const light = new THREE.AmbientLight(0xffffff, 1); // Lumière ambiante douce
+            // 5. Lumière
+            const light = new THREE.AmbientLight(0xffffff, 1);
             scene.add(light);
 
-            // Gérer le redimensionnement de la fenêtre
+            // Gérer le redimensionnement
             window.addEventListener('resize', onWindowResize, false);
         }
 
@@ -125,43 +129,35 @@ document.addEventListener('DOMContentLoaded', function () {
             renderer.setSize(container.clientWidth, container.clientHeight);
         }
 
-        // 6. Animation (Mise à jour pour utiliser la souris)
+        // 6. Animation
         function animate() {
             requestAnimationFrame(animate);
 
-            scene.rotation.x += (-mouseY/4 - scene.rotation.x) * 0.01;
-            scene.rotation.y += (mouseX/4 - scene.rotation.y) * 0.01;
+            // Utiliser gyroscope si mobile et actif, sinon souris
+            const inputX = (isMobile && isGyroActive) ? gyroX : mouseX;
+            const inputY = (isMobile && isGyroActive) ? gyroY : mouseY;
 
+            scene.rotation.x += (-inputY / 4 - scene.rotation.x) * 0.01;
+            scene.rotation.y += (inputX / 4 - scene.rotation.y) * 0.01;
             scene.rotation.z += Math.sin(Date.now() * 0.0002) * 0.001;
-            scene.position.x += (mouseX/4 - scene.position.x) * 0.05;
-            scene.position.y += (-mouseY/4 - scene.position.y) * 0.05;
-            
+            scene.position.x += (inputX / 4 - scene.position.x) * 0.05;
+            scene.position.y += (-inputY / 4 - scene.position.y) * 0.05;
 
-
-            // Remplacer les manipulations cube/sphere par :
             neurons.forEach(n => {
                 const intensity = 0.5 + 0.2 * Math.sin(Date.now() * 0.002 + n.mesh.position.z);
-                n.mesh.material.color.setHSL(0.55+0.01*mouseX, 0.5, intensity);
+                n.mesh.material.color.setHSL(0.55 + 0.01 * inputX, 0.5, intensity);
                 n.mesh.scale.setScalar(0.8 + intensity * 0.2);
             });
-
 
             renderer.render(scene, camera);
         }
 
-        function rgbToHex(r, g, b) {
-            r = Math.floor(r * 255);
-            g = Math.floor(g * 255);
-            b = Math.floor(b * 255);
-            return (r << 16) | (g << 8) | b;
-        }
-
         let neurons = [];
         let connections = [];
-        const layers = [4, 5, 6, 4, 4]; // exemple : 4 entrées, 6 cachés 1, 5 cachés 2, 3 sorties
-        const spacingZ = 3;   // distance entre les couches
-        const spacingY = 1; // distance verticale entre neurones dans une couche
-        const spreadX = 1;  // léger écart horizontal pour éviter un rendu complètement plat
+        const layers = [4, 5, 6, 4, 4];
+        const spacingZ = 3;
+        const spacingY = 1;
+        const spreadX = 1;
 
         function createDeepLearningNetwork() {
             const neuronMaterial = new THREE.MeshStandardMaterial({
@@ -175,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const z = layerIndex * spacingZ - ((layers.length - 1) * spacingZ) / 2;
                 for (let i = 0; i < count; i++) {
                     const y = (i - (count - 1) / 2) * spacingY;
-                    const x = (Math.random() - 0.5) * spreadX; // léger décalage X aléatoire
+                    const x = (Math.random() - 0.5) * spreadX;
                     const geometry = new THREE.SphereGeometry(0.3, 32, 32);
                     const mesh = new THREE.Mesh(geometry, neuronMaterial.clone());
                     mesh.position.set(x, y, z);
@@ -184,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // Connexions entre neurones des couches adjacentes
+            // Connexions entre neurones
             const lineMaterial = new THREE.LineBasicMaterial({ color: 0x3a8aad, transparent: true, opacity: 0.6 });
             neurons.forEach(n1 => {
                 neurons.forEach(n2 => {
@@ -199,18 +195,15 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-
-
-
         // Initialiser et animer la scène 3D
         init();
         animate();
 
     } else {
-        console.error("Three.js n'est pas défini. Vérifiez le lien CDN dans index.html.");
-        const threeContainer = document.getElementById('three-container');
-        if (threeContainer) {
-            threeContainer.innerHTML = "<p style='text-align:center; color: red;'>Impossible de charger la 3D. Vérifiez votre connexion ou le lien Three.js.</p>";
+        console.error("Three.js n'est pas défini. Vérifiez le lien CDN.");
+        const container = document.getElementById('header-3d-bg');
+        if (container) {
+            container.innerHTML = "<p style='text-align:center; color: red;'>Impossible de charger la 3D.</p>";
         }
     }
 });
