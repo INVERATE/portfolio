@@ -134,8 +134,8 @@ document.addEventListener('DOMContentLoaded', function () {
             requestAnimationFrame(animate);
 
             // Utiliser gyroscope si mobile et actif, sinon souris
-            const inputX = (isMobile && isGyroActive) ? gyroX : mouseX;
-            const inputY = (isMobile && isGyroActive) ? gyroY : mouseY;
+            const inputX = (isMobile && isGyroActive) ? gyroX*4 : mouseX;
+            const inputY = (isMobile && isGyroActive) ? gyroY*4 : mouseY;
 
             scene.rotation.x += (-inputY / 4 - scene.rotation.x) * 0.01;
             scene.rotation.y += (inputX / 4 - scene.rotation.y) * 0.01;
