@@ -8,7 +8,7 @@
     /* Utilisé pour les bordures, ombres */
     --secondary-color: #555;
     /* Couleur secondaire, ex: footer */
-    --accent-color: #007BFF;
+    --accent-color: #42a3c9;
     /* Couleur d'accentuation, ex: liens, messages */
 
     /* Couleurs de Fond et Texte */
@@ -18,6 +18,7 @@
     /* Fond des éléments principaux (main, button) */
     --background-darker-color: #e0e0e0;
     /* Couleur pour les motifs discrets (dots) */
+    --background-shadow-color: #acacac;
     --text-color: #333;
     /* Couleur du texte général */
 }
@@ -26,7 +27,7 @@
 /* NOTE: Utiliser WOFF/WOFF2 est plus performant que TTF/OTF pour le web */
 @font-face {
     font-family: 'MainFont';
-    src: url('../fonts/Comfortaa-Bold.ttf') format('truetype');
+    src: url('/assets/fonts/Comfortaa-Bold.ttf') format('truetype');
     /* Le poids doit être précis */
     font-style: normal;
     font-display: swap;
@@ -35,7 +36,7 @@
 
 @font-face {
     font-family: 'TitleFont';
-    src: url('../fonts/Syntha.ttf') format('opentype');
+    src: url('/assets/fonts/Syntha.ttf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -92,7 +93,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: var(--background-page-color);
+    background-color: var(--background-darker-color);
     color: var(--text-color);
 }
 
@@ -142,7 +143,7 @@ header::before {
     /* Devant le canvas (z-index: 0) mais derrière le texte (z-index: 2) */
     pointer-events: none;
     /* Permet d'interagir avec les éléments derrière */
-    background: linear-gradient(to bottom, var(--background-page-color) 0%, transparent 50%);
+    background: linear-gradient(to bottom, var(--background-page-color) 0%, transparent 100%);
 }
 
 header h1,
@@ -168,6 +169,7 @@ header h1 {
     height: 100vh;
     z-index: 0;
     filter:blur(0.5px);
+    
 }
 
 /* État Réduit (Appliqué par JavaScript) */
@@ -185,14 +187,13 @@ header h1 {
 .header-scrolled h1,
 .header-scrolled p {
     font-size: 1em;
-    /* Réduisez la taille du texte si nécessaire */
 }
 
 /* Vous aviez un élément #spacer, utilisons-le si possible, sinon le padding-top sur main est mieux */
 #spacer {
     display: none;
     /* Cachez-le par défaut */
-    height: 15vh;
+    height: 20vh;
     /* Hauteur de la version réduite du header */
     flex-shrink: 0;
 }
@@ -203,6 +204,7 @@ header h1 {
 }
 
 .scroll-down-button {
+    width: 90%;
     margin-top: 1em;
     margin-left: auto;
     margin-right: auto;
@@ -210,12 +212,13 @@ header h1 {
 
     border:none;
     box-shadow: none;
+    background-color: transparent;
 }
 
 .scroll-down-button:hover {
     box-shadow: none;
     transform: translateY(5px);
-    /* Retour à la position normale */
+    scale: 1.05;
 }
 
 .scroll-down-button:active {
@@ -224,11 +227,23 @@ header h1 {
 }
 
 .card {
-    padding: 20px;
-    margin: 20px;
+    padding: 1em;
+    margin-top: 0em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 2em;
+
+
+    display: flex;
+    flex-direction: column;
+
+    /* Assure que la carte utilise tout l'espace vertical disponible dans la grille */
+    height: 100%;
+
+
+
     background-color: var(--background-element-color);
     border-radius: 1em;
-    padding: 1em 2em;
     border: 2px solid var(--primary-color);
 
     /* Effet Skeuo */
@@ -239,6 +254,8 @@ header h1 {
     transition: all 0.2s ease;
 }
 
+
+
 footer {
     text-align: center;
     padding: 20px;
@@ -246,6 +263,40 @@ footer {
     background-color: var(--background-element-color);
     color: var(--secondary-color);
     font-size: 0.9em;
+}
+
+.footer-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+img {
+    width: 100%;
+    height: 200px;
+    border-radius: 1em;
+    object-fit: cover;
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+    border: var(--background-darker-color) 4px solid;
+    box-shadow: 0 0 0 0 var(--background-shadow-color);
+
+    transition: all 0.3s ease;
+}
+
+img:hover {
+    box-shadow: 0 5px 0 0 var(--background-shadow-color);
+    transform: translateY(-5px);
+}
+
+.img-noHover:hover {
+    box-shadow: 0 0 0 0 var(--background-shadow-color);
+    transform: none;
+}
+
+.img-noHeight {
+    height: auto;
 }
 
 
@@ -289,6 +340,40 @@ button:active {
     scale: 0.98;
 }
 
+.button-link {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0.8em 2em;
+
+    font-family: 'MainFont', sans-serif;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text-color);
+    
+    background-color: var(--background-darker-color);
+    border: transparent 2px solid;
+    border-radius: 1em;
+    box-shadow: none;
+
+    transition: all 0.2s ease;
+}
+
+.button-link:hover {
+    border: var(--background-shadow-color) 2px solid;
+    box-shadow: none;
+
+    transform: translateY(-3px);
+}
+
+.button-link:active {
+    background-color: var(--background-shadow-color);
+    box-shadow: none;
+
+    scale: 0.98;
+}
+
 /* --- Divers Utilitaires --- */
 #message {
     margin-top: 15px;
@@ -302,6 +387,7 @@ button:active {
 
 /* Motif de points (Dots) */
 .dots-background {
+    padding : 1em;
     width: 100%;
     height: 100%;
     background-color: var(--background-element-color);
@@ -319,8 +405,10 @@ button:active {
 
 .dots-background:hover {
     animation-play-state: running;
-    /* Vitesse plus rapide au survol */
-    transform: scale(1.02);
+}
+
+.dots-background.noAnimation {
+    animation-play-state: paused;
 }
 
 @keyframes move {
@@ -347,7 +435,7 @@ button:active {
     /* 2. Dimensions et Apparence */
     min-width: 30%;
     width: 400px;
-    max-width: 100%;
+    max-width: 80%;
 
 
     /* Pour les petits écrans */
@@ -418,4 +506,154 @@ button:active {
 .menu-links a:hover {
     color: var(--accent-color);
     transform: translateY(-2px);
+}
+
+/* --- Conteneur de la Grille Réorganisable --- */
+.cards-grid {
+    display: grid;
+
+    /* C'est la ligne magique pour l'organisation automatique et responsive : */
+    /* 1. auto-fit: Remplir l'espace avec autant de colonnes que possible. */
+    /* 2. minmax(300px, 1fr): Chaque colonne doit faire au moins 300px, sinon elle prend le reste de l'espace (1fr). */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    gap: 2em;
+    /* Espacement entre les cartes */
+    padding: 1em;
+}
+
+/* --- Styles pour les nouvelles petites cartes (basées sur ta classe .card existante) --- */
+.card-small {
+    /* Assure que la carte ne s'étire pas au-delà de sa zone de grille */
+    width: 100%;
+
+    /* Optionnel : Rendre ces cartes un peu plus petites que les autres sections */
+    padding: 1em;
+    min-height: 150px;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1em;
+
+    /* Hérite des styles .card (box-shadow, border-radius, etc.) */
+    box-shadow: 0 3px 0 0 var(--primary-color);
+}
+
+.card-small:hover {
+    transform: translateY(-2px);
+    /* Légère modification de la valeur pour plus de subtilité */
+    box-shadow: 0 5px 0 0 var(--primary-color);
+    /* Retrait du scale pour garder la cohérence du mouvement Y */
+}
+
+
+.divider {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: auto;
+    margin-bottom: 1em;
+
+    background-color: var(--primary-color);
+    border-radius: 1em;
+}
+
+
+/* --- Styles pour la Modale de Projet --- */
+
+.project-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3000;
+    /* Assurer qu'elle est au-dessus de tout, y compris du menu latéral */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Masqué par défaut avec transition */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+
+}
+
+.project-modal.is-open {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Voile sombre */
+}
+
+.modal-content {
+    background-color: var(--background-element-color);
+    padding: 30px;
+    border-radius: 1em;
+    position: relative;
+    z-index: 3001;
+    max-width: 900px;
+    /* Largeur confortable pour le contenu du projet */
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    /* Permettre le défilement du contenu du projet */
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 5px 0 0 var(--primary-color);
+
+    /* Pour l'animation d'apparition */
+    transform: translateY(-100px);
+    transition: transform 0.3s ease;
+}
+
+.project-modal.is-open .modal-content {
+    transform: translateY(0px);
+}
+
+/* Positionnement du bouton de fermeture */
+#modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3002;
+    /* Ajustez les couleurs pour qu'il soit visible sur le fond de la modale */
+    color: var(--primary-color);
+    font-size: 2em;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.info-section {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-section h3 {
+    /* Ajoute un espace de 1em sous le titre */
+    margin-bottom: 1em;
+}
+
+.img-grid {
+    /* Retire la grille */
+    display: block;
+
+    /* Utilise les colonnes pour l'effet maçonnerie */
+    columns: 3;
+    /* OU : columns: 300px 3; pour avoir 3 colonnes d'au moins 300px */
+    columns: 300px 3;
+
+    /* Espacement entre les colonnes */
+    column-gap: 2em;
+
+    padding: 1em;
 }

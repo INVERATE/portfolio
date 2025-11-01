@@ -134,12 +134,12 @@ document.addEventListener('DOMContentLoaded', function () {
             requestAnimationFrame(animate);
 
             // Utiliser gyroscope si mobile et actif, sinon souris
-            const inputX = (isMobile && isGyroActive) ? gyroX*10 : mouseX;
-            const inputY = (isMobile && isGyroActive) ? gyroY*10 : mouseY;
+            const inputX = (isMobile && isGyroActive) ? gyroX*5 : mouseX;
+            const inputY = (isMobile && isGyroActive) ? gyroY*5 : mouseY;
 
             scene.rotation.x += (-inputY / 4 - scene.rotation.x) * 0.01;
             scene.rotation.y += (inputX / 4 - scene.rotation.y) * 0.01;
-            scene.rotation.z += Math.sin(Date.now() * 0.0002) * 0.001;
+            scene.rotation.z += Math.sin(Date.now()*0.0002) * 0.0006;
             scene.position.x += (inputX / 4 - scene.position.x) * 0.05;
             scene.position.y += (-inputY / 4 - scene.position.y) * 0.05;
 
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let neurons = [];
         let connections = [];
-        const layers = [4, 5, 6, 4, 4];
+        const layers = [4, 5, 6, 4, 4, 3];
         const spacingZ = 3;
         const spacingY = 1;
         const spreadX = 1;

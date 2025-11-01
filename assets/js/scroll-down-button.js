@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Code pour le bouton simple (inchangé) ---
     const scrollDownButton = document.getElementById('scroll-down-button');
+    const header = document.querySelector('header');
 
     if (scrollDownButton) {
         scrollDownButton.addEventListener('click', function () {
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             console.log('Bouton cliqué !');
         });
+            
     } else {
         console.error("Le bouton avec l'ID 'monBouton' n'a pas été trouvé.");
     }

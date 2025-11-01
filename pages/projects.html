@@ -5,14 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Néo Colpin</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="/assets/img/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://kit.fontawesome.com/125fa325bf.js" crossorigin="anonymous"></script>
-    <script src="../assets/js/script.js"></script>
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/open-modal.js"></script>
 </head>
 
 <body class="scrolled">
-
+    
     <header class="header-scrolled">
         <div>
             <div id="header-3d-bg"></div>
@@ -27,48 +29,116 @@
     <div id="spacer"></div>
 
     <main>
-        
-        <div class="projets-grid">
-            
-            <div class="project-item card">
-                <section class="page-intro">
-                    <h2>🚀 Mes Projets Récents</h2>
-                    <p>Découvrez une sélection de mes réalisations en intelligence artificielle, développement web et données.</p>
-                </section>
-                <h3>Nom du Projet Alpha</h3>
-                <p class="date">Octobre 2025</p>
-    
-                <p>Description courte de l'objectif, des technologies utilisées (TensorFlow, Python, etc.) et du résultat
-                    principal. </p>
-                    <p>Description courte de l'objectif, des technologies utilisées (TensorFlow, Python, etc.) et du résultat
-                        principal. </p><p>Description courte de l'objectif, des technologies utilisées (TensorFlow, Python, etc.) et du résultat
-                            principal. </p><p>Description courte de l'objectif, des technologies utilisées (TensorFlow, Python, etc.) et du résultat
-                                principal. </p><p>Description courte de l'objectif, des technologies utilisées (TensorFlow, Python, etc.) et du résultat
-                                    principal. </p><p>Description courte de l'objectif, des technologies utilisées (TensorFlow, Python, etc.) et du résultat
-                                        principal. </p><p>Description courte de l'objectif, des technologies utilisées (TensorFlow, Python, etc.) et du résultat
-                                            principal. </p><p>Description courte de l'objectif, des technologies utilisées (TensorFlow, Python, etc.) et du résultat
-                                                principal. </p><p>Description courte de l'objectif, des technologies utilisées (TensorFlow, Python, etc.) et du résultat
-                                                    principal. </p><p>Description courte de l'objectif, des technologies utilisées (TensorFlow, Python, etc.) et du résultat
-                                                        principal. </p>
-                <div class="project-tags">
-                    <span class="tag">#IA</span>
-                    <span class="tag">#RéseauxNeurones</span>
+        <div id="projects" class="card">
+            <section class="info-section">
+                <h2>Projets</h2>
+            </section>
+
+        <span class="divider"></span>
+
+
+        <div class="dots-background noAnimation">
+            <div class="cards-grid">
+
+                <div class="card card-small" id="sentiment-analysis">
+                    <h3>Analyse de sentiments</h3>
+                    <img src="/assets/img/projects/sentiment-analysis.png" alt="Image 1" class="img-noHover"></img>
+                    <p>> Implémentation et optimisation de modèles Deep Learning (CNNs, RNNs, Transformers) pour la classification de textes.</p>
+
+                    <span class="divider"></span>
+                    <a class="button-link" href="#sentiment-analysis">
+                        <span>Voir le projet</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                 </div>
-                <a href="details-projet-1.html" class="button">Voir les détails →</a>
+
+                <div class="card card-small" id="predictive-keyboard">
+                    <h3>Clavier virtuel</h3>
+                    <img src="/assets/img/projects/keyboard.png" alt="Image 1" class="img-noHover"></img>
+                    <p>> Clavier prédictif en Node.js utilisant la bibliothèque Electron.</p>
+
+                    <span class="divider"></span>
+                    <a class="button-link" href="#predictive-keyboard">
+                        <span>Voir le projet</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card card-small">
+                    <h3>Matrice LEDs</h3>
+                    <img src="/assets/img/projects/matriceLED.JPG" alt="Image 1" class="img-noHover"></img>
+                    <p>> Affichage de la température sur une matrice LED 16x16, en utilisant la bibliothèque FastLED sur Arduino.</p>
+
+                    <span class="divider"></span>
+                    <a class="button-link" href="/pages/projects.html">
+                        <span>Voir le projet</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card card-small">
+                    <h3>Application d'audit</h3>
+                    <img src="/assets/img/projects/audit.png" alt="Image 1" class="img-noHover"></img>
+                    <p>> Application sur une clé USB Linux permettant de vérifier le fonctionnement d'un ordinateur.</p>
+
+                    <span class="divider"></span>
+                    <a class="button-link" href="/pages/projects.html">
+                        <span>Voir le projet</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card card-small">
+                    <h3>Application d'audit</h3>
+                    <img src="/assets/img/projects/audit.png" alt="Image 1" class="img-noHover"></img>
+                    <p>> Application sur une clé USB Linux permettant de vérifier le fonctionnement d'un ordinateur.</p>
+                
+                    <span class="divider"></span>
+                    <a class="button-link" href="/pages/projects.html">
+                        <span>Voir le projet</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card card-small">
+                    <h3>Application d'audit</h3>
+                    <img src="/assets/img/projects/audit.png" alt="Image 1" class="img-noHover"></img>
+                    <p>> Application sur une clé USB Linux permettant de vérifier le fonctionnement d'un ordinateur.</p>
+
+                    <span class="divider"></span>
+                    <a class="button-link" href="/pages/projects.html">
+                        <span>Voir le projet</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
             </div>
-    
-            <div class="project-item card">
-            </div>
-    
+        </div>
         </div>
     </main>
 
 
     <footer>
-        <p>Codé avec <i class="fa-solid fa-heart" style="color: darkcyan;"></i> par Néo Colpin</p>
+        <div id="footer-top-row" class="footer-top-row">
+            <p>Codé avec <i class="fa-solid fa-heart" style="color: var(--accent-color);"></i> par Néo Colpin</p>
+            <a id="test1" class="button-link" href="/pages/contact.html">
+                <span>Contactez-moi</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
     </footer>
+    
+    <script src="assets/js/menu-assets.js"></script>
 
-    <script src="../assets/js/menu-assets.js"></script>
+
+    <div id="project-modal" class="project-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button id="modal-close" class="menu-close-btn" aria-label="Fermer le projet">&times;</button>
+    
+            <div id="modal-project-content">
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

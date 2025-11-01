@@ -4,12 +4,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const monBouton = document.getElementById('monBouton');
     const messageP = document.getElementById('message');
     let compteurClics = 0;
+    let message = "";
 
     if (monBouton) {
         monBouton.addEventListener('click', function () {
             compteurClics++;
-            messageP.textContent = `Vous avez cliqué ${compteurClics} fois sur le bouton !`;
-            console.log('Bouton cliqué !');
+            message += "Youpi ! ";
+
+            messageP.textContent = message;
+
+            if (compteurClics >= 10) {
+                messageP.textContent = "Vous avez l'air content !";
+            }
+
+            if (compteurClics >= 15) {
+                message = "";
+                compteurClics = 0;
+            }
+
         });
     } else {
     console.error("Le bouton avec l'ID 'monBouton' n'a pas été trouvé.");
