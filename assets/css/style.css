@@ -515,7 +515,7 @@ button:active {
     /* C'est la ligne magique pour l'organisation automatique et responsive : */
     /* 1. auto-fit: Remplir l'espace avec autant de colonnes que possible. */
     /* 2. minmax(300px, 1fr): Chaque colonne doit faire au moins 300px, sinon elle prend le reste de l'espace (1fr). */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 
     gap: 2em;
     /* Espacement entre les cartes */
@@ -649,8 +649,6 @@ button:active {
 
     /* Utilise les colonnes pour l'effet maçonnerie */
     columns: 3;
-    /* OU : columns: 300px 3; pour avoir 3 colonnes d'au moins 300px */
-    columns: 300px 3;
 
     /* Espacement entre les colonnes */
     column-gap: 2em;
