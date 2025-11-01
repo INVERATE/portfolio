@@ -519,7 +519,6 @@ button:active {
 
     gap: 2em;
     /* Espacement entre les cartes */
-    padding: 1em;
 }
 
 /* --- Styles pour les nouvelles petites cartes (basées sur ta classe .card existante) --- */
@@ -648,10 +647,8 @@ button:active {
     display: block;
 
     /* Utilise les colonnes pour l'effet maçonnerie */
-    columns: 3;
+    column-width: 250px;
 
     /* Espacement entre les colonnes */
     column-gap: 2em;
-
-    padding: 1em;
 }
