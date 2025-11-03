@@ -1,44 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentiment Analysis Project</title>
+    <title>Projet Data Science : Analyse de sentiments - RoBERTa</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="https://kit.fontawesome.com/125fa325bf.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <main>
+        <div class="dots-background noAnimation">
         <article class="project">
-            <h1>Sentiment Analysis Project</h1>
-            
+            <!-- espace entre le titre et le contenu -->
+            <div class="space"></div>
+            <h2>Analyse de sentiments de commentaires utilisateurs sur Amazon avec du Deep Learning</h2>
+
+
             <section class="project-overview">
-                <h2>Project Overview</h2>
-                <p>A brief description of the sentiment analysis project and its main objectives.</p>
+                <h2>Objectif du Projet</h2>
+                <p>> Ce projet vise à prédire le <strong>score de satisfaction client (de 1 à 5)</strong> à
+                    partir de commentaires textuels (dataset Amazon Fine Food Reviews) en exploitant et
+                    comparant plusieurs techniques de Machine Learning et Deep Learning.</p>
+                <p>> L'objectif final étant de déployer un modèle performant sous forme d'API web (FastAPI).</p>
             </section>
 
             <section class="key-features">
-                <h2>Key Features</h2>
-                <ul>
-                    <li>Feature 1: Text analysis capabilities</li>
-                    <li>Feature 2: Machine learning implementation</li>
-                    <li>Feature 3: Real-time processing</li>
-                </ul>
+                <h2>Approches et Meilleurs Résultats</h2>
+                <p>Le projet a comparé différentes méthodes, des plus simples aux plus complexes, afin de comprendre les avantages et les limites de chacune d'elles.</p>
+                <p>Nous avons essayé :</p>
+                <li><b>Machine Learning Traditionnel</b> : L'approche la plus rapide a été la Régression Logistique, qui a obtenu un F1-score de
+                0.79 sur la classe positive (Score 5). Cependant, elle était peu efficace sur les classes négatives, n'atteignant que
+                0.27 sur la classe 1</li>
+                <div class="space"></div>
+                <img src="/assets/img/projects/sentiment-analysis results machine learning.png" alt="Image 1" class="img-square"></img>
+                <li><b> Réseaux de Neurones Simples et Récurrents (Deep Learning)</b> : L'intégration de la technique de Word Embedding dans un réseau de neurones a amélioré les performances sur les classes minoritaires, notamment avec le modèle
+                LSTM (Réseau de Neurones Récurrents). Le LSTM a permis d'atteindre un F1-score de 0.49 pour la classe 1 et de 0.76 pour
+                la classe 5. Ces modèles sont particulièrement efficaces pour gérer les négations et le contexte séquentiel du texte, qui est une limite principale des modèles traditionnels.</li>
+                <div class="space"></div>
+                <img src="/assets/img/projects/sentiment-analysis results deep learning.png" alt="Image 1" class="img-square"></img>
+                <li><b>Transformers</b> : Pour obtenir une meilleure compréhension des subtilités du langage (comme le double sens ou
+                l'ironie), nous avons eu recours aux modèles basés sur les Transformers. Le modèle Transformer RoBERTa fine-tuné sur les données à notre disposition s'est révélé le plus performant, obtenant un F1-score de
+                0.72 sur la classe minoritaire 1 et de 0.89 sur la classe majoritaire 5.</li>
+
+                <img src="/assets/img/projects/sentiment-analysis results.png" alt="Image 1" class="img-square"></img>
             </section>
 
             <section class="technologies">
-                <h2>Technologies Used</h2>
-                <ul>
-                    <li>Python</li>
-                    <li>Natural Language Processing</li>
-                    <li>Machine Learning Libraries</li>
-                </ul>
+                <h2>Stack Technique</h2>
+                    <li>
+                        <strong>Préparation des Données (NLP)</strong> : Cette phase a inclus la <strong>lemmatisation</strong>, un
+                        nettoyage personnalisé des <em>stopwords</em> (mots vides) et l'utilisation de techniques
+                        d'<strong>oversampling</strong> pour compenser le fort déséquilibre initial des classes.
+                    </li>
+                    <div class="space"></div>
+                    <li>
+                        <strong>Modèle Final</strong> : Un modèle <strong>Transformer RoBERTa</strong> fine-tuné a été sélectionné
+                        pour la classification multiclasse (5 scores de satisfaction). Ce choix a été fait pour sa capacité à
+                        capturer les subtilités du langage et son efficacité.
+                    </li>
+                    <div class="space"></div>
+                    <li>
+                        <strong>Déploiement</strong> : La solution est accessible via une <strong>API RESTful</strong> développée
+                        avec le framework <strong>FastAPI</strong>. L'API est déployée sur la plateforme
+                        <strong>Render</strong>, tandis que le modèle volumineux (> 400 Mo) est stocké sur <strong>Hugging
+                            Face</strong>.
+                    </li>
             </section>
 
             <section class="demo">
-                <h2>Demo</h2>
-                <img src="path-to-your-demo-image.jpg" alt="Project Demo">
-                <p>Brief explanation of how the project works.</p>
+                <h2>Déploiement API (Exemple)</h2>
+                <p>Le modèle est accessible via l'endpoint <code
+                        style="background-color:#eee; padding: 2px 4px;">POST /predict</code>. La réponse fournit le
+                    score prédit et la confiance du modèle sur ce texte.</p>
+                    <div class="space"></div>
+
+                <pre>
+                Requête (Envoyer) :
+                { "text": "This is nice !!!" }
+
+                Réponse (Recevoir) :
+                {
+                    "predicted_score": 5,
+                    "confidence": 0.8579
+                }</pre>
+
+                <div class="space"></div>
+                <p>Cette solution permet  d'obtenir une note rapide et objective pour chaque commentaire
+                    client, facilitant le tri et la consultation des avis à grande échelle.</p>
             </section>
         </article>
+        </div>
     </main>
 </body>
+
 </html>

@@ -32,6 +32,10 @@
         <div id="projects" class="card">
             <section class="info-section">
                 <h2>Projets</h2>
+                <a href="https://github.com/INVERATE" target="_blank" class="button-link contact-button">
+                    <i class="fa-brands fa-github"></i>
+                    <span>GitHub</span>
+                </a>
             </section>
 
         <span class="divider"></span>
@@ -132,11 +136,12 @@
 
     <div id="project-modal" class="project-modal">
         <div class="modal-overlay"></div>
+        <button id="modal-close" class="menu-close-btn" aria-label="Fermer le projet">
+            <i class="fa-solid fa-xmark"></i>
+            <p>Fermer</p>
+        </button>
         <div class="modal-content">
-            <button id="modal-close" class="menu-close-btn" aria-label="Fermer le projet">&times;</button>
-    
-            <div id="modal-project-content">
-            </div>
+            <div id="modal-project-content"></div>
         </div>
     </div>
 </body>

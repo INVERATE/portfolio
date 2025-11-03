@@ -1,37 +1,25 @@
 /* ===================================================
- * 1. VARIABLES & FONT-FACE
+ * VARIABLES & FONT-FACE
  * =================================================== */
 
 :root {
-    /* Couleurs de Thème */
     --primary-color: #333;
-    /* Utilisé pour les bordures, ombres */
     --secondary-color: #555;
-    /* Couleur secondaire, ex: footer */
     --accent-color: #42a3c9;
-    /* Couleur d'accentuation, ex: liens, messages */
 
-    /* Couleurs de Fond et Texte */
     --background-page-color: #f4f4f4;
-    /* Fond de la page (body) */
     --background-element-color: whitesmoke;
-    /* Fond des éléments principaux (main, button) */
     --background-darker-color: #e0e0e0;
-    /* Couleur pour les motifs discrets (dots) */
     --background-shadow-color: #acacac;
     --text-color: #333;
-    /* Couleur du texte général */
 }
 
 /* Polices personnalisées */
-/* NOTE: Utiliser WOFF/WOFF2 est plus performant que TTF/OTF pour le web */
 @font-face {
     font-family: 'MainFont';
     src: url('/assets/fonts/Comfortaa-Bold.ttf') format('truetype');
-    /* Le poids doit être précis */
     font-style: normal;
     font-display: swap;
-    /* Bonne pratique pour l'affichage des polices */
 }
 
 @font-face {
@@ -44,12 +32,11 @@
 
 
 /* ===================================================
- * 2. STYLES GLOBAUX & RESET
+ * STYLES GLOBAUX
  * =================================================== */
 
 * {
     box-sizing: border-box;
-    /* Meilleure gestion des paddings/borders */
     margin: 0;
     padding: 0;
 }
@@ -57,35 +44,24 @@
 /* réserve l'espace de la scrollbar pour éviter le saut */
 html {
     scrollbar-gutter: stable;
-    /* moderne et propre */
 }
-/* style.css */
 
-/* Cible l'ensemble de la barre de défilement (sur la page entière) */
 ::-webkit-scrollbar {
     width: 1em;
-    /* Largeur de la barre de défilement verticale */
     height: 1em;
-    /* Hauteur de la barre de défilement horizontale */
 }
 
-/* Cible le "rail" ou la "piste" (le fond de la barre) */
 ::-webkit-scrollbar-track {
     background: var(--background-darker-color);
-    /* Couleur de fond du rail */
 }
 
-/* Cible la "poignée" ou le "pouce" (la partie que l'on manipule) */
 ::-webkit-scrollbar-thumb {
-    background: rgb(173, 173, 173);
-    /* Couleur de la poignée */
+    background: var(--background-shadow-color);
     border-radius: 1em;
 }
 
-/* Style de la poignée au survol (hover) */
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(130, 130, 130);
-    /* Couleur plus foncée au survol */
 }
 
 body {
@@ -97,55 +73,60 @@ body {
     color: var(--text-color);
 }
 
+main {
+    margin: 0;
+    padding: 0;
+}
+
 /* ===================================================
- * 3. MISE EN PAGE & STRUCTURE
+ * HEADER
  * =================================================== */
 
 header {
+    /* Positionnement et dimensionnement */
+    width: 100%;
+    min-height: 85vh;
+    padding: 10px;
     z-index: 10;
-    /* Assuré d'être au-dessus de tout le contenu 3D */
     display: flex;
-    ;
     justify-content: space-between;
     align-items: flex-start;
-    /* Alignement modernisé */
 
     /* Styles Thème */
     color: var(--text-color);
     text-align: left;
     border: var(--primary-color) 2px solid;
     border-radius: 0 0 1em 1em;
-    width: 100%;
-    min-height: 85vh;
-    padding: 10px;
 
-    /* Effet "Skeuo" - état normal */
+    /* Effets */
     background-color: var(--background-element-color);
     box-shadow: 0 5px 0 0 var(--primary-color);
     transform: translateY(0);
     overflow: hidden;
 
-    /* Transition pour l'effet de survol */
+    /* Transition */
     transition: all 0.7s ease-in-out;
 }
 
-/* Dégradé de masquage pour le fond 3D (bonne pratique) */
 header::before {
+    /* Dégradé de fond */
     content: "";
     position: absolute;
     top: 0;
     left: 0;
+
     width: 100%;
-    /* Largeur du dégradé */
     height: 100%;
-    /* Utilisation de la variable pour le fond si nécessaire, mais blanc est OK ici */
     z-index: 1;
     /* Devant le canvas (z-index: 0) mais derrière le texte (z-index: 2) */
+
     pointer-events: none;
     /* Permet d'interagir avec les éléments derrière */
     background: linear-gradient(to bottom, var(--background-page-color) 0%, transparent 100%);
 }
 
+
+/* Elements du header */
 header h1,
 header p,
 header button{
@@ -158,6 +139,8 @@ header button{
 header h1 {
     font-family: 'TitleFont', sans-serif;
     font-size: 3em;
+    /* Transition */
+    transition: all 0.7s ease-in-out;
 }
 
 /* Canvas de fond Three.js */
@@ -168,48 +151,49 @@ header h1 {
     width: 100%;
     height: 100vh;
     z-index: 0;
+
+    /* Effet de flou */
     filter:blur(0.5px);
-    
 }
 
 /* État Réduit (Appliqué par JavaScript) */
 .header-scrolled {
     min-height: 10vh;
-    /* Hauteur réduite souhaitée (ajustez cette valeur) */
+    /* Hauteur réduite du header */
 
-    /* Optionnel : Rendre le header fixe en haut de page */
     position: fixed;
     top: 0;
     left: 0;
 }
 
-/* Assurez-vous que le contenu à l'intérieur du header est centré ou repositionné si besoin */
+/* Texte plus petit lorsque le header est reduit */
 .header-scrolled h1,
 .header-scrolled p {
     font-size: 1em;
 }
 
-/* Vous aviez un élément #spacer, utilisons-le si possible, sinon le padding-top sur main est mieux */
+
 #spacer {
     display: none;
-    /* Cachez-le par défaut */
+    /* Caché par défaut */
     height: 20vh;
-    /* Hauteur de la version réduite du header */
     flex-shrink: 0;
 }
 
 .scrolled #spacer {
     display: block;
-    /* Affichez-le uniquement quand on scroll */
+    /* Affiché uniquement quand on scroll */
 }
 
+
+/* Bouton de scroll sur la page d'accueil */
 .scroll-down-button {
-    width: 90%;
     margin-top: 1em;
     margin-left: auto;
     margin-right: auto;
     display: block;
-
+    
+    width: 90%;
     border:none;
     box-shadow: none;
     background-color: transparent;
@@ -223,38 +207,12 @@ header h1 {
 
 .scroll-down-button:active {
     transform: translateY(8px);
-    /* Retour à la position normale */
+    /* Descend pour montrer le sens du scroll */
 }
 
-.card {
-    padding: 1em;
-    margin-top: 0em;
-    margin-left: 1em;
-    margin-right: 1em;
-    margin-bottom: 2em;
-
-
-    display: flex;
-    flex-direction: column;
-
-    /* Assure que la carte utilise tout l'espace vertical disponible dans la grille */
-    height: 100%;
-
-
-
-    background-color: var(--background-element-color);
-    border-radius: 1em;
-    border: 2px solid var(--primary-color);
-
-    /* Effet Skeuo */
-    box-shadow: 0 5px 0 0 var(--primary-color),
-        inset -3px -3px 0 0 var(--background-element-color);
-    /* Utilisation de la variable */
-
-    transition: all 0.2s ease;
-}
-
-
+/* ===================================================
+ * FOOTER
+ * =================================================== */
 
 footer {
     text-align: center;
@@ -265,23 +223,166 @@ footer {
     font-size: 0.9em;
 }
 
+/* permet d'afficher des éléments dans le footer sur une seule ligne */
 .footer-top-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-img {
-    width: 100%;
-    height: 200px;
+/* Message dans le footer */
+#message {
+    margin-top: 15px;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+
+/* ===================================================
+ * CARDS
+ * =================================================== */
+.card {
+    /* Positionnement et dimensionnement */
+    padding: 1em;
+    margin-top: 0em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 2em;
+    height: 100%;
+    max-width: none;
+
+    /* Styles Thème */
+    background-color: var(--background-element-color);
     border-radius: 1em;
-    object-fit: cover;
+    border: 2px solid var(--primary-color);
+
+    /* Effets */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 0 0 var(--primary-color),
+        inset -3px -3px 0 0 var(--background-element-color);
+
+    /* Transition */
+    transition: all 0.2s ease;
+}
+
+.card-small {
+    width: 100%;
+    min-height: 150px;
+
+    padding: 1em;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+
+    box-shadow: 0 3px 0 0 var(--primary-color);
+}
+
+.card-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 0 var(--primary-color);
+}
+
+/* évite que les liens soient aient deux fois la marge */
+.card-small a {
+    margin: 0;
+}
+
+/* laisser un espace entre le texte et les élements suivants */
+.card-small p {
+    margin-bottom: 1em;
+}
+
+/* ===================================================
+ * Elements d'interface
+ * =================================================== */
+
+button {
+    /* Positionnement et dimensionnement */
+    position: relative;
+    overflow: hidden;
+    padding: 1em 2em;
+
+    /* Styles Thème */
+    font-family: 'MainFont', sans-serif;
+    background-color: var(--background-element-color);
+    color: var(--text-color);
+    border-radius: 1em;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid var(--primary-color);
+
+    box-shadow: 0 2px 0 0 var(--primary-color);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 0 0 var(--primary-color);
+}
+
+button:active {
+    transform: translateY(3px);
+    box-shadow: 0 0 0 0 var(--primary-color);
+    scale: 0.98;
+}
+
+.button-link {
+    /* Positionnement et dimensionnement */
+    margin: 1em;
+    padding: 0.8em 2em;
+    white-space: nowrap;
+
+    /* Styles Thème */
+    font-family: 'MainFont', sans-serif;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text-color);
+
+    /* Effets */
+    background-color: var(--background-darker-color);
+    border: transparent 2px solid;
+    border-radius: 1em;
+    box-shadow: none;
+
+    /* Transition */
+    transition: all 0.2s ease;
+}
+
+.button-link:hover {
+    border: var(--background-shadow-color) 2px solid;
+    box-shadow: none;
+    transform: translateY(-3px);
+}
+
+.button-link:active {
+    background-color: var(--background-shadow-color);
+    box-shadow: none;
+    scale: 0.98;
+}
+
+img {
+    /* Positionnement et dimensionnement */
     margin-top: 1em;
     margin-bottom: 1em;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
 
+    /* Styles Thème */
+    background-color: var(--background-element-color);
+    border-radius: 1em;
+
+    /* Effets */
     border: var(--background-darker-color) 4px solid;
     box-shadow: 0 0 0 0 var(--background-shadow-color);
 
+    /* Transition */
     transition: all 0.3s ease;
 }
 
@@ -299,118 +400,49 @@ img:hover {
     height: auto;
 }
 
+.img-square {
+    width: 30%;
+    height: 30%;
+
+    min-width: 200px;
+   /* centrer image */
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+}
+
 
 /* ===================================================
- * 4. COMPOSANTS RÉUTILISABLES
- * =================================================== */
-
-/* --- Bouton Skeuomorphisme --- */
-button {
-    font-family: 'MainFont', sans-serif;
-    background-color: var(--background-element-color);
-    color: var(--text-color);
-    border-radius: 1em;
-    font-size: 17px;
-    font-weight: 600;
-    padding: 1em 2em;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 2px solid var(--primary-color);
-
-    /* Effet initial */
-    box-shadow: 0 2px 0 0 var(--primary-color);
-    position: relative;
-    overflow: hidden;
-    /* Nécessaire pour les effets internes (comme les dots) */
-}
-
-/* Hover (Soulèvement) */
-button:hover {
-    transform: translateY(-3px);
-    /* Légère modification de la valeur pour plus de subtilité */
-    box-shadow: 0 5px 0 0 var(--primary-color);
-    /* Retrait du scale pour garder la cohérence du mouvement Y */
-}
-
-/* Active (Enfoncement) */
-button:active {
-    transform: translateY(3px);
-    /* Retour à la position normale */
-    box-shadow: 0 0 0 0 var(--primary-color);
-    scale: 0.98;
-}
-
-.button-link {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0.8em 2em;
-
-    font-family: 'MainFont', sans-serif;
-    text-align: center;
-    font-size: 17px;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--text-color);
-    
-    background-color: var(--background-darker-color);
-    border: transparent 2px solid;
-    border-radius: 1em;
-    box-shadow: none;
-
-    transition: all 0.2s ease;
-}
-
-.button-link:hover {
-    border: var(--background-shadow-color) 2px solid;
-    box-shadow: none;
-
-    transform: translateY(-3px);
-}
-
-.button-link:active {
-    background-color: var(--background-shadow-color);
-    box-shadow: none;
-
-    scale: 0.98;
-}
-
-/* --- Divers Utilitaires --- */
-#message {
-    margin-top: 15px;
-    font-weight: bold;
-    color: var(--accent-color);
-}
-
-/* ===================================================
- * 5. ANIMATIONS ET EFFETS
+ * DIVERS
  * =================================================== */
 
 /* Motif de points (Dots) */
 .dots-background {
-    padding : 1em;
+    /* Positionnement et dimensionnement */
     width: 100%;
     height: 100%;
     background-color: var(--background-element-color);
     background-image: radial-gradient(var(--background-darker-color) 3px, transparent 0);
     background-size: 30px 30px;
 
-    /* Correction : Laissez l'animation toujours active, et utilisez l'état de jeu pour le contrôle */
+
     animation: move 2s linear infinite;
-    /* Animation de base lente */
     animation-play-state: paused;
     /* Pause par défaut */
     transition: animation-duration 0.5s ease-in-out, transform 0.3s ease;
-    /* Transition sur les propriétés animées */
 }
 
+/* Animation au survol */
 .dots-background:hover {
     animation-play-state: running;
 }
 
+/* évite d'avoir une animation, pour avoir un effet statique */
 .dots-background.noAnimation {
     animation-play-state: paused;
 }
 
+/* Animation */
 @keyframes move {
     0% {
         background-position: 0 0;
@@ -421,38 +453,64 @@ button:active {
     }
 }
 
+.info-section {
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+}
 
-/* menu-assets.css */
+.info-section h3 {
+    /* Ajoute un espace de 1em sous le titre */
+    margin-bottom: 1em;
+}
 
-/* --- Styles du Panneau Latéral (Le "Pop-up" à droite) --- */
+.divider {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: auto;
+    margin-bottom: 1em;
+
+    background-color: var(--primary-color);
+    border-radius: 1em;
+}
+
+.space {
+    display: block;
+    width: 100%;
+    height: 1em;
+}
+
+/* ===================================================
+ * PANNEAU LATÉRAL / MENU
+ * =================================================== */
 
 .menu-panel {
-    /* 1. Positionnement fixe : reste en place pendant le défilement */
+    /*Positionnement et dimensionnement */
     position: fixed;
     top: 0;
     right: 0;
+    padding: 1em;
+    z-index: 1001; /* pour être devant le fond transparent noir */
 
-    /* 2. Dimensions et Apparence */
     min-width: 30%;
     width: 400px;
     max-width: 80%;
 
-
-    /* Pour les petits écrans */
+    /* Styles Thème */
     background-color: var(--background-page-color);
     color: var(--text-color);
     font-weight: bolder;
-    padding: 1em;
-    z-index: 1001;
 
+    /* Effets */
     border: 2px solid var(--primary-color);
     border-radius: 0 0 0 1em;
     box-shadow: 0 0 10px var(--primary-color), 0 5px 0 0 var(--primary-color);
 
-    /* 3. Masquage initial */
+    /* Masquage initial */
     transform: translateY(-200%);
 
-    /* 4. Animation de transition */
+    /*Animation de transition */
     transition: transform 0.3s ease-out;
 }
 
@@ -461,15 +519,17 @@ button:active {
     transform: translateX(0);
 }
 
-/* Overlay pour cliquer à l'extérieur et fermer */
+/* Overlay pour cliquer à l'extérieur et fermer le menu */
 .menu-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+
     background-color: rgba(0, 0, 0, 0.5);
-     /* Semi-transparent noir */
+     /* fond transparent noir */
+
     z-index: 1000;
     display: none;
     /* Caché par défaut */
@@ -479,10 +539,9 @@ button:active {
     display: block;
 }
 
-/* Styles des éléments internes (Bouton et liens) */
 .menu-close-btn {
     float: right;
-    z-index: 1002;
+    z-index: 1002; /* Pour passer devant le menu et éviter les conflits avec les autres éléments du menu*/
 }
 
 .menu-links {
@@ -508,57 +567,9 @@ button:active {
     transform: translateY(-2px);
 }
 
-/* --- Conteneur de la Grille Réorganisable --- */
-.cards-grid {
-    display: grid;
-
-    /* C'est la ligne magique pour l'organisation automatique et responsive : */
-    /* 1. auto-fit: Remplir l'espace avec autant de colonnes que possible. */
-    /* 2. minmax(300px, 1fr): Chaque colonne doit faire au moins 300px, sinon elle prend le reste de l'espace (1fr). */
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-
-    gap: 2em;
-    /* Espacement entre les cartes */
-}
-
-/* --- Styles pour les nouvelles petites cartes (basées sur ta classe .card existante) --- */
-.card-small {
-    /* Assure que la carte ne s'étire pas au-delà de sa zone de grille */
-    width: 100%;
-
-    /* Optionnel : Rendre ces cartes un peu plus petites que les autres sections */
-    padding: 1em;
-    min-height: 150px;
-    margin-top: 0;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 1em;
-
-    /* Hérite des styles .card (box-shadow, border-radius, etc.) */
-    box-shadow: 0 3px 0 0 var(--primary-color);
-}
-
-.card-small:hover {
-    transform: translateY(-2px);
-    /* Légère modification de la valeur pour plus de subtilité */
-    box-shadow: 0 5px 0 0 var(--primary-color);
-    /* Retrait du scale pour garder la cohérence du mouvement Y */
-}
-
-
-.divider {
-    display: block;
-    width: 100%;
-    height: 2px;
-    margin-top: auto;
-    margin-bottom: 1em;
-
-    background-color: var(--primary-color);
-    border-radius: 1em;
-}
-
-
-/* --- Styles pour la Modale de Projet --- */
+/* ===================================================
+ * MODALE
+ * =================================================== */
 
 .project-modal {
     position: fixed;
@@ -576,8 +587,8 @@ button:active {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s ease, visibility 0.3s ease;
-
 }
+
 
 .project-modal.is-open {
     visibility: visible;
@@ -589,57 +600,66 @@ button:active {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Voile sombre */
+    /* Fond transparent noir */
 }
 
 .modal-content {
-    background-color: var(--background-element-color);
-    padding: 30px;
-    border-radius: 1em;
+    padding-left: 1em;
+    margin-bottom: 4em;
     position: relative;
     z-index: 3001;
-    max-width: 900px;
-    /* Largeur confortable pour le contenu du projet */
+
     width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
-    /* Permettre le défilement du contenu du projet */
+    max-width: 900px;
+    max-height: 90%;
+    overflow:clip;
+
     border: 2px solid var(--primary-color);
+    border-radius: 1em;
+    background-color: var(--background-element-color);
     box-shadow: 0 5px 0 0 var(--primary-color);
 
-    /* Pour l'animation d'apparition */
     transform: translateY(-100px);
     transition: transform 0.3s ease;
+}
+
+/* Le scroll se fait sur le contenu interne */
+#modal-project-content {
+    max-height: calc(90vh - 60px);
+    /* 60px = padding haut + bas de .modal-content */
+    overflow-y: auto;
+    padding-right: 1em;
+    /* Optionnel : compense visuellement la scrollbar */
 }
 
 .project-modal.is-open .modal-content {
     transform: translateY(0px);
 }
 
-/* Positionnement du bouton de fermeture */
 #modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    position: fixed;
+    bottom: 1em;
     z-index: 3002;
-    /* Ajustez les couleurs pour qu'il soit visible sur le fond de la modale */
-    color: var(--primary-color);
-    font-size: 2em;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-}
 
-.info-section {
-    margin-top: 1em;
-    margin-bottom: 1em;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 8px;
 }
 
-.info-section h3 {
-    /* Ajoute un espace de 1em sous le titre */
+/* ===================================================
+ * LAYOUT
+ * =================================================== */
+
+.cards-grid {
+    display: grid;
     margin-bottom: 1em;
+
+    /* 1. auto-fit: Remplir l'espace avec autant de colonnes que possible. */
+    /* 2. minmax(300px, 1fr): Chaque colonne doit faire au moins 300px, sinon elle prend le reste de l'espace (1fr). */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5em;
 }
 
 .img-grid {
@@ -648,7 +668,73 @@ button:active {
 
     /* Utilise les colonnes pour l'effet maçonnerie */
     column-width: 250px;
+    column-count: auto;
+    width:100%
+}
 
-    /* Espacement entre les colonnes */
-    column-gap: 2em;
+.img-grid img {
+    width: 100%;
+    margin-top: 0em;
+    margin-bottom: 1em;
+
+    /* IMPORTANT : permet le recalcul du nombre de colonnes nécessaires en fonction du contenu */
+    display: block;
+}
+
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+}
+
+/* ===================================================
+ * STYLES DE PAGE DE PROJET (basés sur le template HTML)
+ * =================================================== */
+
+.project-overview,
+.key-features,
+.technologies,
+.demo {
+    /* Utilise l'arrière-plan plus clair pour la mise en page */
+    background-color: var(--background-element-color);
+    padding: 1.5em;
+    margin-bottom: 2em;
+    border-radius: 1em;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 5px 0 0 var(--primary-color);
+    text-align: justify;
+        text-justify: inter-word;
+}
+
+.project h2 {
+    /* Style pour les sous-titres de section */
+    border-bottom: 2px solid var(--background-darker-color);
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    font-size: 1.8em;
+}
+
+/* --- Bloc Highlight --- */
+.highlight {
+    background-color: var(--background-darker-color);
+    padding: 1em;
+    border-radius: 0.5em;
+    margin-top: 1.5em;
+    border-left: 5px solid var(--accent-color);
+    /* Bande de couleur pour l'accentuation */
+    font-style: italic;
+}
+
+/* --- Code Block pour l'API --- */
+pre {
+    background-color: var(--primary-color);
+    color: var(--background-element-color);
+    padding: 1em;
+    border-radius: 1em;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: monospace;
+    font-size: 0.9em;
+    border: 2px solid var(--text-color);
 }
