@@ -44,22 +44,42 @@ function initGyroscope() {
 
 // Gérer les données du gyroscope
 function handleOrientation(event) {
-    if (event.beta !== null && event.gamma !== null) {
-        // beta: inclinaison avant/arrière (-180 à 180)
-        // gamma: inclinaison gauche/droite (-90 à 90)
+    if (event.beta !== null && event.gamma !== null && event.alpha !== null) {
+        let beta = event.beta;   // Inclinaison avant/arrière (-180 à 180)
+        let gamma = event.gamma; // Inclinaison gauche/droite (-90 à 90)
+        let alpha = event.alpha; // Rotation azimut (0 à 360)
 
-        // Normaliser beta (-90 à 90 pour un usage pratique)
-        let beta = event.beta;
-        if (beta > 90) beta = 90;
-        if (beta < -90) beta = -90;
+        // Détecter si le téléphone est en position verticale (presque à plat)
+        // et gérer le gimbal lock
+        const isNearVertical = Math.abs(beta) > 75 && Math.abs(beta) < 105;
 
-        // Convertir en valeurs normalisées (-1 à 1)
-        gyroY = beta / 90;  // Inclinaison avant/arrière
-        gyroX = event.gamma / 90;  // Inclinaison gauche/droite
+        if (isNearVertical) {
+            // Utiliser alpha (rotation azimutale) au lieu de gamma quand on est vertical
+            // pour éviter le gimbal lock
+            const alphaRad = (alpha * Math.PI) / 180;
+            const betaSign = beta > 0 ? 1 : -1;
 
-        // Inverser si l'appareil est en mode paysage
-        if (window.orientation === 90 || window.orientation === -90) {
+            gyroX = Math.sin(alphaRad) * betaSign;
+            gyroY = Math.cos(alphaRad) * betaSign;
+        } else {
+            // Comportement normal pour les autres positions
+            // Limiter beta à une plage utilisable
+            beta = Math.max(-90, Math.min(90, beta));
+
+            // Normaliser les valeurs
+            gyroY = beta / 90;
+            gyroX = gamma / 90;
+        }
+
+        // Gérer l'orientation paysage
+        const orientation = window.orientation || 0;
+        if (orientation === 90) {
+            [gyroX, gyroY] = [gyroY, -gyroX];
+        } else if (orientation === -90 || orientation === 270) {
             [gyroX, gyroY] = [-gyroY, gyroX];
+        } else if (orientation === 180) {
+            gyroX = -gyroX;
+            gyroY = -gyroY;
         }
     }
 }
@@ -98,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function init() {
             // 1. Scène
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xf0f0f0);
+
 
             // 2. Caméra
             camera = new THREE.PerspectiveCamera(1, container.clientWidth / container.clientHeight, 0.1, 1000);
@@ -135,7 +155,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Utiliser gyroscope si mobile et actif, sinon souris
             const inputX = (isMobile && isGyroActive) ? gyroX*5 : mouseX*2;
-            const inputY = (isMobile && isGyroActive) ? gyroY*5 : mouseY*2;
+            const inputY = (isMobile && isGyroActive) ? gyroY * 5 : mouseY * 2;
+            
 
             scene.rotation.x += (-inputY / 4 - scene.rotation.x) * 0.01;
             scene.rotation.y += (inputX / 4 - scene.rotation.y) * 0.01;
