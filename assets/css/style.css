@@ -381,8 +381,17 @@ button:active {
 .button-link {
     /* Positionnement et dimensionnement */
     margin: 1em;
-    padding: 0.8em 2em;
+    padding: 1em 1em;
     white-space: nowrap;
+
+    white-space: normal;
+    word-break: break-word;
+
+    /* Ajoutez : */
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    justify-content: center;
 
     /* Styles Thème */
     font-family: 'MainFont', sans-serif;
