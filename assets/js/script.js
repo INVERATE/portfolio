@@ -2,13 +2,13 @@
 let mouseX = 0;
 let mouseY = 0;
 
-// Variables pour le gyroscope
+// Variables pour le gyroscope du téléphone
 let gyroX = 0;
 let gyroY = 0;
 let isGyroActive = false;
 let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-// Événement pour capturer la position de la souris (desktop)
+// Événement pour capturer la position de la souris
 document.addEventListener('mousemove', (event) => {
     if (!isMobile) {
         mouseX = (event.clientX / window.innerWidth) * 2 - 1;
@@ -16,7 +16,7 @@ document.addEventListener('mousemove', (event) => {
     }
 });
 
-// Fonction pour demander la permission et initialiser le gyroscope (iOS 13+)
+// Fonction pour demander la permission et initialiser le gyroscope
 async function requestGyroPermission() {
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         try {
@@ -85,7 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
         initGyroscope();
     }
 
-    // --- Code pour Three.js ---
+    // --- Code pour Three.js---
+    // Afficher le fond en 3D
     if (typeof THREE !== 'undefined') {
         const container = document.getElementById('header-3d-bg');
         if (!container) {
@@ -98,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
         function init() {
             // 1. Scène
             scene = new THREE.Scene();
-
 
             // 2. Caméra
             camera = new THREE.PerspectiveCamera(1, container.clientWidth / container.clientHeight, 0.1, 1000);

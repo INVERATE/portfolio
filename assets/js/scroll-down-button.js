@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    // --- Code pour le bouton simple (inchangé) ---
+    // Bouton en dessous du header qui permet de scroller vers le bas
     const scrollDownButton = document.getElementById('scroll-down-button');
     const header = document.querySelector('header');
 

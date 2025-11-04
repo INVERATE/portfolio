@@ -1,14 +1,12 @@
 // menu-assets.js
+// Affiche le menu latéral en injectant le contenu HTML depuis un fichier externe
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Étape 1 : Injection du Menu HTML ---
-
     const menuToggleBtn = document.getElementById('menu-toggle');
-    const menuContainer = document.getElementById('menu-container-placeholder'); // Placeholder dans votre page principale (voir étape 4)
 
+    // lors du clic du bouton de menu, affiche le menu latéral
     if (menuToggleBtn) {
-        // Chemin d'accès absolu à votre fichier side-menu.html
         const menuHtmlPath = '/pages/side-menu.html';
 
         fetch(menuHtmlPath)
@@ -22,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Insère le contenu du menu dans le corps du document
                 document.body.insertAdjacentHTML('beforeend', html);
 
-                // --- Étape 2 : Initialisation des Écouteurs d'Événements ---
+                // Récupère les éléments du menu latéral
 
                 const sideMenu = document.getElementById('side-menu');
                 const overlay = document.getElementById('overlay');

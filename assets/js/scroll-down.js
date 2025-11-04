@@ -36,8 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
             header.classList.remove('header-scrolled');
             document.body.classList.remove('scrolled');
         }
-
-        // SUPPRIMEZ le bloc else qui force toujours la réduction
     }
 
     function onScroll() {

@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-
-    // --- Code pour le bouton simple (inchangé) ---
     const monBouton = document.getElementById('monBouton');
     const messageP = document.getElementById('message');
     let compteurClics = 0;
