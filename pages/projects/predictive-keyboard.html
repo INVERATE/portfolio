@@ -1,46 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentiment Analysis Project</title>
+    <title>Clavier virtuel avec prédictions — Néo COLPIN / Fanny BADOULES / Thibault MORETTI</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="https://kit.fontawesome.com/125fa325bf.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <main>
-        <article class="project">
-            <h1>Sentiment Analysis Project</h1>
+        <div class="dots-background noAnimation">
+            <div class="linear-gradient">
+            <article class="project">
+                <div class="space"></div>
+                <h1>Clavier virtuel avec prédictions</h1>
+                <h2>Néo COLPIN / Fanny BADOULES / Thibault MORETTI</h2>
 
-            <section class="project-overview">
-                <h2>Project Overview</h2>
-                <p>A brief description of the sentiment analysis project and its main objectives.</p>
-            </section>
+                <a class="button-link" href="https://github.com/INVERATE/Clavier-prediction" target="_blank">
+                    <i class="fa-brands fa-github"></i>
+                    <span>Ouvrir sur GitHub</span>
+                </a>
 
-            <section class="key-features">
-                <h2>Key Features</h2>
-                <ul>
-                    <li>Feature 1: Text analysis capabilities</li>
-                    <li>Feature 2: Machine learning implementation</li>
-                    <li>Feature 3: Real-time processing</li>
-                </ul>
-            </section>
 
-            <section class="technologies">
-                <h2>Technologies Used</h2>
-                <ul>
-                    <li>Python</li>
-                    <li>Natural Language Processing</li>
-                    <li>Machine Learning Libraries</li>
-                </ul>
-            </section>
 
-            <section class="demo">
-                <h2>Demo</h2>
-                <img src="path-to-your-demo-image.jpg" alt="Project Demo">
-                <p>Brief explanation of how the project works.</p>
-            </section>
-        </article>
+                <section class="project-section">
+                    <h2>Objectif du Projet</h2>
+
+                    <p>> Ce projet consiste à développer un <strong>clavier virtuel intelligent</strong> capable de
+                        <strong>mettre en évidence les lettres les plus probables</strong> à taper en fonction du
+                        contexte : les mots précédents, les lettres déjà saisies et les mots existants dans un
+                        dictionnaire. </p>
+                    <p>Il offre ainsi une <strong>aide à la saisie intuitive</strong>, permettant à l'utilisateur
+                        d'anticiper les lettres ou mots à venir.</p>
+                </section>
+
+                <section class="project-section">
+                    <h2>Fonctionnalités principales</h2>
+                    <ul>
+                        <li><strong>Mise en valeur dynamique</strong> des lettres selon leur probabilité d’apparition.
+                        </li>
+                        <li><strong>Différents niveaux de surbrillance</strong> :
+                            <ul>
+                                <li>Lettre neutre : aucune surbrillance</li>
+                                <li>Probabilité entre 10–20 % : jaune 🟨</li>
+                                <li>Probabilité > 20 % : rouge 🟥</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="project-section">
+                    <h2>Corpus utilisé</h2>
+                    <p>L’algorithme repose sur un <strong>corpus constitué des livres de Harry Potter</strong>. Ce choix
+                        a été fait pour la longueur du texte et la richesse linguistique de ses enchaînements de mots.
+                        Les phrases y sont bien construites sans être trop littéraires, ce qui permet un usage adapté à
+                        la rédaction de texte pour le grand public.</p>
+                    <p><strong>Limite :</strong> la présence de termes spécifiques à l’univers Harry Potter (ex. « moldu
+                        », « Voldemort ») peut biaiser certaines prédictions.</p>
+                    <blockquote>“C’est un début, dit Voldemort. Mais Thicknesse n’est qu’un individu isolé...”
+                    </blockquote>
+                    <p><strong>Amélioration possible :</strong> enrichir le corpus avec des textes issus de Wikipédia ou
+                        de sites de journaux grâce au <em>web scraping</em>.</p>
+                </section>
+
+                <section class="project-section">
+                    <h2>Modèle utilisé : Chaîne de Markov</h2>
+                    <p>Le modèle repose sur une <strong>chaîne de Markov</strong>, un modèle probabiliste où la
+                        probabilité d’un événement dépend uniquement de l’état précédent.</p>
+                    <p>Dans notre cas, la probabilité qu’une lettre apparaisse dépend :</p>
+                    <ul>
+                        <li>des <strong>transitions entre lettres</strong> dans le mot en cours ;</li>
+                        <li>des <strong>transitions entre mots</strong> précédemment saisis (jusqu’à deux pour notre
+                            implémentation).</li>
+                    </ul>
+                </section>
+
+                <section class="project-section">
+                    <h2>🖥️ Interface graphique avec Electron</h2>
+                    <p>Nous avons choisi <strong>Electron</strong> comme solution d’interface graphique pour rendre le
+                        clavier visuel, interactif et intuitif. Electron permet de créer des applications de bureau à
+                        l’aide de technologies web (HTML, CSS, JavaScript) tout en s’appuyant sur
+                        <strong>Node.js</strong> pour accéder aux fonctionnalités système.</p>
+                    <img src="/assets/img/projects/keyboard.png" alt="Interface du clavier virtuel"
+                        class="img-square">
+                </section>
+
+                <section class="project-section">
+                    <h2>Architecture de l’application Electron</h2>
+                    <p>L’application repose sur plusieurs fichiers clés :</p>
+                    <ul>
+                        <li><code>package.json</code> : gestion des dépendances</li>
+                        <li><code>main.js</code> : point d’entrée de l’application (lance la fenêtre Electron)</li>
+                        <li><code>preload.js</code> : passerelle sécurisée entre le backend (Node.js) et le frontend
+                        </li>
+                        <li><code>keyboard.html</code> : interface utilisateur</li>
+                        <li><code>keyboard.js</code> : logique du clavier (positionnement des touches, interactions...)
+                        </li>
+                        <li><code>keyboard.css</code> : style visuel du clavier</li>
+                    </ul>
+        
+                </section>
+
+            </article>
+        </div>
+        </div>
     </main>
 </body>
 

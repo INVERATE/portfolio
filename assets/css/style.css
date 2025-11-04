@@ -84,6 +84,10 @@ main {
 
 header {
     /* Positionnement et dimensionnement */
+    position: fixed;
+    top: 0;
+    left: 0;
+
     width: 100%;
     min-height: 85vh;
     padding: 10px;
@@ -174,40 +178,54 @@ header h1 {
 
 
 #spacer {
-    display: none;
+    display: block;
     /* Caché par défaut */
-    height: 20vh;
-    flex-shrink: 0;
+    height: 85vh;
+
+    /* Transition */
+    transition: all 0.7s ease-in-out;
 }
 
 .scrolled #spacer {
     display: block;
     /* Affiché uniquement quand on scroll */
+    height: 10vh;
+}
+
+#spacer-double {
+    display: block;
+    /* Caché par défaut */
+    height: 20vh;
 }
 
 
 /* Bouton de scroll sur la page d'accueil */
 .scroll-down-button {
-    margin-top: 1em;
-    margin-left: auto;
-    margin-right: auto;
+    /* Positionnement et dimensionnement */
     display: block;
+    margin-top: 1em;
     
-    width: 90%;
+    width: 100%;
     border:none;
     box-shadow: none;
     background-color: transparent;
+
+    transition: all 0.7s ease-in-out;
 }
 
 .scroll-down-button:hover {
     box-shadow: none;
     transform: translateY(5px);
-    scale: 1.05;
 }
 
 .scroll-down-button:active {
     transform: translateY(8px);
     /* Descend pour montrer le sens du scroll */
+}
+
+/* ne pas afficher si scrolled */
+.scrolled .scroll-down-button {
+    opacity: 0;
 }
 
 /* ===================================================
@@ -216,8 +234,8 @@ header h1 {
 
 footer {
     text-align: center;
-    padding: 20px;
-    margin-top: 30px;
+    padding: 1em;
+    margin-top: 1em;
     background-color: var(--background-element-color);
     color: var(--secondary-color);
     font-size: 0.9em;
@@ -229,6 +247,22 @@ footer {
     justify-content: space-between;
     align-items: center;
 }
+
+footer #contact {
+    margin:0;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.05);
+}
+
+footer #contact:hover {
+    background-color: var(--background-page-color);
+    box-shadow: 0 0 100px 100px rgba(0, 0, 0, 0.2);
+}
+
+footer #contact:active {
+    background-color: var(--background-shadow-color);
+    box-shadow: 0 0 100px 100px rgba(0, 0, 0, 0.2);
+}
+
 
 /* Message dans le footer */
 #message {
@@ -260,11 +294,25 @@ footer {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 5px 0 0 var(--primary-color),
-        inset -3px -3px 0 0 var(--background-element-color);
+    box-shadow: 0 5px 0 0 var(--primary-color);
 
     /* Transition */
     transition: all 0.2s ease;
+}
+
+.card-focus {
+    z-index: 1000;
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.05), 0 5px 0 0 var(--primary-color);
+    transition: all 0.7s ease;
+}
+
+
+.card-focus:hover {
+    transform: translateY(-2px);
+    scale: 1.01;
+    z-index:1000;
+    box-shadow: 0 0 100px 100px rgba(0, 0, 0, 0.2), 0 5px 0 0 var(--primary-color);
 }
 
 .card-small {
@@ -275,7 +323,7 @@ footer {
     margin-top: 0;
     margin-left: 0;
     margin-right: 0;
-    margin-bottom: 0;
+    margin-bottom: 1em;
 
     box-shadow: 0 3px 0 0 var(--primary-color);
 }
@@ -285,7 +333,7 @@ footer {
     box-shadow: 0 5px 0 0 var(--primary-color);
 }
 
-/* évite que les liens soient aient deux fois la marge */
+/* évite que les liens aient deux fois la marge */
 .card-small a {
     margin: 0;
 }
@@ -366,6 +414,11 @@ button:active {
     scale: 0.98;
 }
 
+.button-link.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
 img {
     /* Positionnement et dimensionnement */
     margin-top: 1em;
@@ -401,8 +454,8 @@ img:hover {
 }
 
 .img-square {
-    width: 30%;
-    height: 30%;
+    width: 50%;
+    height: 50%;
 
     min-width: 200px;
    /* centrer image */
@@ -451,6 +504,10 @@ img:hover {
     100% {
         background-position: 30px 30px;
     }
+}
+
+.linear-gradient {
+    background-image: linear-gradient(to bottom, rgba(245, 245, 245, 0.8) 0%, rgba(0, 0, 0, 0)10%);
 }
 
 .info-section {
@@ -691,10 +748,7 @@ img:hover {
  * STYLES DE PAGE DE PROJET (basés sur le template HTML)
  * =================================================== */
 
-.project-overview,
-.key-features,
-.technologies,
-.demo {
+.project-section {
     /* Utilise l'arrière-plan plus clair pour la mise en page */
     background-color: var(--background-element-color);
     padding: 1.5em;
@@ -703,8 +757,16 @@ img:hover {
     border: 2px solid var(--primary-color);
     box-shadow: 0 5px 0 0 var(--primary-color);
     text-align: justify;
-        text-justify: inter-word;
+    text-justify: inter-word;
 }
+
+.project .button-link {
+    margin: 0;
+    margin-bottom: 1em;
+    display: inline-block;
+    width: 100%;
+}
+
 
 .project h2 {
     /* Style pour les sous-titres de section */

@@ -12,13 +12,19 @@
 <body>
     <main>
         <div class="dots-background noAnimation">
+            <div class="linear-gradient">
         <article class="project">
             <!-- espace entre le titre et le contenu -->
             <div class="space"></div>
             <h2>Analyse de sentiments de commentaires utilisateurs sur Amazon avec du Deep Learning</h2>
 
+            <a class="button-link" href="https://github.com/INVERATE/Analyse-de-sentiments" target="_blank">
+                <i class="fa-brands fa-github"></i>
+                <span>Ouvrir sur GitHub</span>
+            </a>
 
-            <section class="project-overview">
+
+            <section class="project-section">
                 <h2>Objectif du Projet</h2>
                 <p>> Ce projet vise à prédire le <strong>score de satisfaction client (de 1 à 5)</strong> à
                     partir de commentaires textuels (dataset Amazon Fine Food Reviews) en exploitant et
@@ -26,9 +32,9 @@
                 <p>> L'objectif final étant de déployer un modèle performant sous forme d'API web (FastAPI).</p>
             </section>
 
-            <section class="key-features">
+            <section class="project-section">
                 <h2>Approches et Meilleurs Résultats</h2>
-                <p>Le projet a comparé différentes méthodes, des plus simples aux plus complexes, afin de comprendre les avantages et les limites de chacune d'elles.</p>
+                <p>Nous avons comparé différentes méthodes, des plus simples aux plus complexes, afin de comprendre les avantages et les limites de chacune d'elles.</p>
                 <p>Nous avons essayé :</p>
                 <li><b>Machine Learning Traditionnel</b> : L'approche la plus rapide a été la Régression Logistique, qui a obtenu un F1-score de
                 0.79 sur la classe positive (Score 5). Cependant, elle était peu efficace sur les classes négatives, n'atteignant que
@@ -47,7 +53,7 @@
                 <img src="/assets/img/projects/sentiment-analysis results.png" alt="Image 1" class="img-square"></img>
             </section>
 
-            <section class="technologies">
+            <section class="project-section">
                 <h2>Stack Technique</h2>
                     <li>
                         <strong>Préparation des Données (NLP)</strong> : Cette phase a inclus la <strong>lemmatisation</strong>, un
@@ -69,7 +75,7 @@
                     </li>
             </section>
 
-            <section class="demo">
+            <section class="project-section">
                 <h2>Déploiement API (Exemple)</h2>
                 <p>Le modèle est accessible via l'endpoint <code
                         style="background-color:#eee; padding: 2px 4px;">POST /predict</code>. La réponse fournit le
@@ -92,6 +98,8 @@
             </section>
         </article>
         </div>
+        </div>
+
     </main>
 </body>
 

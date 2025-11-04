@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Néo Colpin</title>
+    <title>Projets - Néo Colpin</title>
     <link rel="icon" href="/assets/img/favicon.png" type="image/png">
     <link rel="stylesheet" href="/assets/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -18,7 +18,7 @@
     <header class="header-scrolled">
         <div>
             <div id="header-3d-bg"></div>
-            <h1>NÉo ColpiN</h1>
+            <h1>NÉO COLPIN</h1>
             <p>Étudiant ingénieur en Intelligence artificielle</p>
         </div>
         <button id="menu-toggle" aria-label="Toggle Menu">
@@ -26,7 +26,7 @@
         </button>
     </header>
 
-    <div id="spacer"></div>
+    <div id="spacer-double"></div>
 
     <main>
         <div id="projects" class="card">
@@ -44,6 +44,31 @@
         <div class="dots-background noAnimation">
             <div class="cards-grid">
 
+                <div class="card card-small">
+                    <h3>Application d'audit</h3>
+                    <img src="/assets/img/projects/audit laptop.jpg" alt="Image 1" class="img-noHover"></img>
+                    <p>> Application sur une clé USB Linux permettant de vérifier le fonctionnement d'un ordinateur, connectée à un serveur central.</p>
+                
+                    <span class="divider"></span>
+                    <a class="button-link" href="#audit">
+                        <span>Voir le projet</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="card card-small">
+                    <h3>Open data Vélib'</h3>
+                    <img src="/assets/img/projects/velib map.png" alt="Image 1" class="img-noHover"></img>
+                    <p>> Projet de fin d'études sur les données de Vélib'.</p>
+                    <p>> Analyse, visualisation et prédictions des données.</p>
+                
+                    <span class="divider"></span>
+                    <a class="button-link disabled" href="" target="_blank">
+                        <span>En cours</span>
+                        <i class="fa-solid fa-clock"></i>
+                    </a>
+                </div>
+
                 <div class="card card-small" id="sentiment-analysis">
                     <h3>Analyse de sentiments</h3>
                     <img src="/assets/img/projects/sentiment-analysis.png" alt="Image 1" class="img-noHover"></img>
@@ -52,7 +77,7 @@
                     <span class="divider"></span>
                     <a class="button-link" href="#sentiment-analysis">
                         <span>Voir le projet</span>
-                        <i class="fa-solid fa-arrow-right"></i>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                 </div>
 
@@ -64,7 +89,7 @@
                     <span class="divider"></span>
                     <a class="button-link" href="#predictive-keyboard">
                         <span>Voir le projet</span>
-                        <i class="fa-solid fa-arrow-right"></i>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                 </div>
 
@@ -74,47 +99,12 @@
                     <p>> Affichage de la température sur une matrice LED 16x16, en utilisant la bibliothèque FastLED sur Arduino.</p>
 
                     <span class="divider"></span>
-                    <a class="button-link" href="/pages/projects.html">
+                    <a class="button-link" href="#matriceLED">
                         <span>Voir le projet</span>
-                        <i class="fa-solid fa-arrow-right"></i>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                 </div>
-
-                <div class="card card-small">
-                    <h3>Application d'audit</h3>
-                    <img src="/assets/img/projects/audit.png" alt="Image 1" class="img-noHover"></img>
-                    <p>> Application sur une clé USB Linux permettant de vérifier le fonctionnement d'un ordinateur.</p>
-
-                    <span class="divider"></span>
-                    <a class="button-link" href="/pages/projects.html">
-                        <span>Voir le projet</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-
-                <div class="card card-small">
-                    <h3>Application d'audit</h3>
-                    <img src="/assets/img/projects/audit.png" alt="Image 1" class="img-noHover"></img>
-                    <p>> Application sur une clé USB Linux permettant de vérifier le fonctionnement d'un ordinateur.</p>
                 
-                    <span class="divider"></span>
-                    <a class="button-link" href="/pages/projects.html">
-                        <span>Voir le projet</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-
-                <div class="card card-small">
-                    <h3>Application d'audit</h3>
-                    <img src="/assets/img/projects/audit.png" alt="Image 1" class="img-noHover"></img>
-                    <p>> Application sur une clé USB Linux permettant de vérifier le fonctionnement d'un ordinateur.</p>
-
-                    <span class="divider"></span>
-                    <a class="button-link" href="/pages/projects.html">
-                        <span>Voir le projet</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
             </div>
         </div>
         </div>
@@ -123,8 +113,8 @@
 
     <footer>
         <div id="footer-top-row" class="footer-top-row">
-            <p>Codé avec <i class="fa-solid fa-heart" style="color: var(--accent-color);"></i> par Néo Colpin</p>
-            <a id="test1" class="button-link" href="/pages/contact.html">
+                        <p><i class="fa-solid fa-copyright"></i> 2025 - Néo Colpin</p>
+            <a id="contact" class="button-link" href="/pages/contact.html">
                 <span>Contactez-moi</span>
                 <i class="fa-solid fa-arrow-right"></i>
             </a>

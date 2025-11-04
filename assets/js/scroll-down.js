@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function handleScroll() {
         const threshold = 0;
-        const isScrolled = window.scrollY > threshold;
+        const isScrolled = window.scrollY > threshold || !(window.innerHeight + window.scrollY < document.body.offsetHeight);
 
         if (isScrolled && !header.classList.contains('header-scrolled')) {
             header.classList.add('header-scrolled');
@@ -28,6 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (!isScrolled && header.classList.contains('header-scrolled')) {
             header.classList.remove('header-scrolled');
             document.body.classList.remove('scrolled');
+        }
+
+        else {
+            header.classList.add('header-scrolled');
+            document.body.classList.add('scrolled');
         }
     }
 

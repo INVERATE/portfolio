@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             messageP.textContent = message;
 
-            if (compteurClics >= 10) {
+            if (compteurClics >= 5) {
                 messageP.textContent = "Vous avez l'air content !";
             }
 

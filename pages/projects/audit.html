@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application d’audit d’ordinateurs — Néo COLPIN</title>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <script src="https://kit.fontawesome.com/125fa325bf.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <main>
+        <div class="dots-background noAnimation">
+            <div class="linear-gradient">
+                <article class="project">
+                    <div class="space"></div>
+
+                    <h1>Application d’audit d’ordinateurs</h1>
+                    <h2>Réalisé en stage chez Revalo</h2>
+
+                    <section class="project-section">
+                        <h2>Objectif</h2>
+                        <p>
+                            L’objectif de cet outil est de permettre d’auditer un lot d'ordinateurs facilement, en limitant au
+                            maximum les erreurs humaines et en améliorant la fiabilité des données. Ce projet est divisé en deux parties fonctionnant en coordination :
+                        </p>
+                        <ul>
+                            <li><strong>application locale</strong> embarquée sur <strong>clé USB bootable</strong>
+                                (Lubuntu)
+                                permettant d'effectuer des tests automatisés et manuels sur un PC.</li>
+                            <li><strong>site web</strong> pouvant recevoir les résultats d'audit à partir des clés USB, centralisant
+                                les données et permettant de les consulter, modifier et exporter.</li>
+                        </ul>
+
+                    </section>
+
+                    <section class="project-section">
+                        <h2>Partie clé USB — application locale</h2>
+                        <p>
+                            J’ai développé une application métier stockée sur une <strong>clé USB bootable</strong> (Lubuntu
+                            LTS,
+                            distribution allégée d'Ubuntu). L’utilisateur branche la clé, boote dessus et l’application démarre
+                            automatiquement lorsque l'ordinateur s'allume.
+                        </p>
+
+                        <img src="/assets/img/projects/audit.png" alt="Image 1" class="img-square"></img>
+                        <img src="/assets/img/projects/audit usb.jpg" alt="Image 1" class="img-square"></img>
+
+                        <div class="space"></div>
+                        
+                        <h3>Fonctionnalités principales</h3>
+                        <ul>
+                            <li>Tests automatiques : CPU, RAM, stockage, GPU, réseau, batterie,
+                                température, etc.</li>
+                             <li>Tests manuels : certains tests nécessitent une interaction humaine, comme le clavier, écran ,
+                                caméra, audio, châssis, ports USB.</li>
+                            <li>Envoi automatique vers le serveur central si connexion Internet disponible. Un fichier de log est enregistré sur la clé.</li>
+                            </li>
+                        </ul>
+
+                        <img src="/assets/img/projects/audit screen.png" alt="Image 1" class="img-square"></img>
+
+                        <div class="space"></div>
+
+                        <h3>Aspects techniques et contraintes</h3>
+                        <ul>
+                            <li>Choix OS : <strong>Lubuntu LTS</strong> via Rufus (mode Try pour compatibilité avec la majorité des ordinateurs
+                                /
+                                Secure Boot)</li>
+                            <li>Gestion de la persistance sur clé pour conserver paramètres et
+                                logs.
+                            </li>
+                            <li>Duplication : workflow de création d’images (.img) pour cloner et déployer plusieurs
+                                clés. Les mises à jour sont effectuées via GitHub avec une clé SSH.</li>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section class="project-section">
+                        <h2>Partie site de gestion</h2>
+                        <p>
+                            J’ai également conçu un site avec une API REST sécurisée et une base de données centralisée
+                            pour recevoir, valider et stocker les audits envoyés par les clés. Ce site web permet de
+                            consulter,
+                            filtrer, éditer et exporter les données.
+                        </p>
+
+                        <img src="/assets/img/projects/audit site.png" alt="Image 1" class="img-square"></img>
+                        <img src="/assets/img/projects/audit site 3.png" alt="Image 1" class="img-square"></img>
+                        <img src="/assets/img/projects/audit site 2.png" alt="Image 1" class="img-square"></img>
+
+
+                        <div class="space"></div>
+
+                        <h3>Fonctionnalités principales</h3>
+                        <ul>
+                            <li>Réception des données à partir des données des clés USB, une fois l'audit confirmé par le technicien. Le site va ensuite envoyer une confirmation de réception sur l'appareil testé pour indiquer qu'il peut être éteint.</li>
+                            </li>
+                            <li>Authentification API et contrôle d’accès (permissions par rôle).</li>
+                            <li>Export : Excel et connexion directe vers l'ERP existant de l'entreprise</li>
+                        </ul>
+                    </section>
+
+                </article>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

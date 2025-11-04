@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lampe à lave numérique — Néo COLPIN / Benjamin / Arthur</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="https://kit.fontawesome.com/125fa325bf.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <main>
+        <div class="dots-background noAnimation">
+            <div class="linear-gradient">
+                <article class="project">
+                    <div class="space"></div>
+                    <h2>Lampe à lave numérique</h2>
+
+                    <section class="project-section">
+                        <h2>Objectif du Projet</h2>
+                        <p>Ce projet a consisté à recréer le fonctionnement d’une <strong>lampe à lave de
+                                manière numérique</strong>, en alliant <strong>aspect décoratif</strong> et
+                            <strong>utilité concrète</strong>. L’idée était de concevoir une lampe esthétique capable
+                            d’afficher la température de la pièce tout en générant un effet visuel fluide / organique
+                            grâce au <strong>bruit de Perlin</strong>.</p>
+                    </section>
+
+                    <section class="project-section">
+                        <h2>Création de l’objet</h2>
+                        <p>La lampe est contenue dans un châssis conçu à l’aide de <a href="https://boxes.hackerspace-bamberg.de/">boxes.py</a>, puis découpé au laser.
+                            L’affichage est assuré par une <strong>matrice LED 16x16</strong>, étant le bon compromis entre densité de pixels et rapidité de traitement.</p>
+                        <p>La température est mesurée par une <strong>thermorésistance</strong>, dont la valeur de
+                            résistance varie selon la température. Une <strong>carte Arduino Uno</strong>est utilisée, étant largement suffisante pour gérer les 256 LEDs et le capteur simultanément. Une plaque de <strong>plexiglass
+                                semi-opaque</strong> diffuse la lumière et permet une meilleure visibilité.</p>
+                        <img src="/assets/img/projects/matriceLED.jpg" alt="Prototype de la lampe à lave numérique"
+                            class="img-square">
+                        <img src="/assets/img/projects/matriceLED prototype.png" alt="Prototype de la lampe à lave numérique"
+                            class="img-square">
+                        
+                    </section>
+
+                    <section class="project-section">
+                        <h2>Bibliothèques utilisées</h2>
+                        <ul>
+                            <li><strong>FastLED</strong> — pour le contrôle des LEDs RGB de la matrice. Cette
+                                bibliothèque gère efficacement la luminosité et les effets lumineux.</li>
+                            <li><strong>LEDMatrix</strong> — pour manipuler la matrice en deux dimensions via des
+                                coordonnées (x, y), rendant le code bien plus intuitif.</li>
+                        </ul>
+                        <p>Les principales fonctions utilisées incluent :</p>
+                        <ul>
+                            <li><code>DrawPixel(x, y, couleur)</code> — allumer une LED précise</li>
+                            <li><code>DrawLine(x0, y0, x1, y1, couleur)</code> — tracer une ligne</li>
+                            <li><code>DrawRectangle(x0, y0, x1, y1, couleur)</code> — tracer un contour</li>
+                            <li><code>DrawCircle(xc, yc, r, couleur)</code> — dessiner un cercle</li>
+                        </ul>
+                    </section>
+
+                    <section class="project-section">
+                        <h2>Gestion de la température</h2>
+                        <h3>Thermorésistance et calibration</h3>
+                        <p>La thermorésistance alimente une entrée analogique de l’Arduino. Après quelques tests, un
+                            décalage d’environ <strong>45°C</strong> a été observé par rapport à la température réelle.
+                            Une correction d’offset a donc été appliquée pour obtenir une mesure précise.</p>
+
+                        <h3>Affichage sur la matrice</h3>
+                        <p>Les températures sont affichées sur la matrice via des <strong>patterns à deux
+                                chiffres</strong>. Chaque chiffre est représenté par un affichage inspiré des <em>écrans
+                                7 segments</em>, généré à partir de chaînes de caractères.</p>
+                        <p>Pour les températures inférieures à 10°C, un zéro est ajouté au début pour éviter les erreurs
+                            d’indexation (exemple : “09”).</p>
+                    </section>
+
+                    <section class="project-section">
+                        <h2>Couleur selon la température</h2>
+                        <p>La couleur globale du fond de la lampe varie selon la température ambiante. Grâce à la fonction
+                            <code>map()</code>, la température (0–30°C) est transformée en une plage de valeurs de
+                             teinte (0–128) pour ajuster la couleur dynamiquement. La couleur tirant vers le bleu correspond aux températures froides, tandis que la couleur rouge correspond aux températures chaudes.</p>
+                        <p>Le modèle de couleur <strong>HSV</strong> (Hue, Saturation, Value) a été préféré au RGB pour
+                            simplifier la variation des teintes.</p>
+                        <pre>
+H : teinte (rouge → vert → bleu → rouge)
+S : saturation (intensité de la couleur)
+V : luminosité
+                    </pre>
+                    </section>
+
+                    <section class="project-section">
+                        <h2>Bruit de Perlin</h2>
+                         <p>Le <strong>bruit de Perlin</strong> permet de générer un motif pseudo-aléatoire organique. En
+                            faisant varier le paramètre temporel <em>t</em>, l’animation donne l’impression d’un
+                            <strong>mouvement fluide</strong>, similaire à une lampe à lave réelle.</p>
+                        <p>Grâce à la fonction <code>inoise8()</code> de FastLED, chaque frame calcule une teinte
+                            différente selon la position (x, y) de la LED et le temps. </p>
+                        <video src="/assets/img/projects/matriceLED perlin-noise.mp4" alt="Illustration du bruit de Perlin"
+                            controls class="img-square"></video>
+                    </section>
+
+                </article>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
