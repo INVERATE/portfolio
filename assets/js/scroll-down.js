@@ -18,7 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function handleScroll() {
         const threshold = 0;
-        const isScrolled = window.scrollY > threshold || !(window.innerHeight + window.scrollY < document.body.offsetHeight);
+
+        // Vérifie si la page a assez de contenu pour scroller
+        const hasEnoughContent = document.body.offsetHeight > window.innerHeight;
+
+        // Le header est réduit SI :
+        // 1. On a scrollé au-delà du seuil OU
+        // 2. La page n'a pas assez de contenu (pour forcer la réduction)
+        const isScrolled = window.scrollY > threshold || !hasEnoughContent;
 
         if (isScrolled && !header.classList.contains('header-scrolled')) {
             header.classList.add('header-scrolled');
@@ -30,10 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.classList.remove('scrolled');
         }
 
-        else {
-            header.classList.add('header-scrolled');
-            document.body.classList.add('scrolled');
-        }
+        // SUPPRIMEZ le bloc else qui force toujours la réduction
     }
 
     function onScroll() {
