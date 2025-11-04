@@ -48,13 +48,8 @@ function handleOrientation(event) {
         // beta: inclinaison avant/arrière (-180 à 180)
         // gamma: inclinaison gauche/droite (-90 à 90)
 
-        // Normaliser beta (-90 à 90 pour un usage pratique)
-        let beta = event.beta;
-        if (beta > 90) beta = 90;
-        if (beta < -90) beta = -90;
-
         // Convertir en valeurs normalisées (-1 à 1)
-        gyroY = beta / 90;  // Inclinaison avant/arrière
+        gyroY = event.beta / 90;  // Inclinaison avant/arrière
         gyroX = event.gamma / 90;  // Inclinaison gauche/droite
 
         // Inverser si l'appareil est en mode paysage
@@ -134,8 +129,8 @@ document.addEventListener('DOMContentLoaded', function () {
             requestAnimationFrame(animate);
 
             // Utiliser gyroscope si mobile et actif, sinon souris
-            const inputX = (isMobile && isGyroActive) ? gyroX : mouseX*2;
-            const inputY = (isMobile && isGyroActive) ? gyroY : mouseY * 2;
+            const inputX = (isMobile && isGyroActive) ? gyroX*5 : mouseX*2;
+            const inputY = (isMobile && isGyroActive) ? gyroY*5 : mouseY * 2;
             
 
             scene.rotation.x += (-inputY / 4 - scene.rotation.x) * 0.01;
